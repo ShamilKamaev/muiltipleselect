@@ -1,11 +1,10 @@
 <template>
   <div id="m-select">
-    <component :is="selectType" :clicnic-id="clinicId" :branchesIds="branchesIds" :apiUrl="apiUrl" :already-selected="alreadySelected"></component>
+    <component :is="selectType" :clinic-id="clinicId" :branches-ids="branchesIds" :api-url="apiUrl" :already-selected="alreadySelected"></component>
     <!-- <component 
       :is="'select-checkbox'" 
-      :clinic-id="'15212'" 
-      :api-url="'http://spb.p.test.napopravku.ru/profile/load-smd-tree/'" 
-      :alreadySelected=""></component> -->
+      :clinic-id="15212" 
+      :api-url="'http://spb.p.test.napopravku.ru/profile/load-smd-tree/'" ></component> -->
   </div>
 </template>
 
@@ -34,7 +33,7 @@
         required: false,
       }, 
 
-      clicnicId: {
+      clinicId: {
         required: true
       },
 
@@ -67,9 +66,11 @@
     font-family: Gotham Pro, sans-serif;
     font-weight: normal;
     outline: none;
+    padding: 1px;
 
     &.is-active {
-      border: 1px solid #40b3b7;
+      border: 2px solid #40b3b7;
+      padding: 0px;
       .services-list {
         height: auto;
         max-height: 340px;
@@ -83,7 +84,7 @@
 
     input[type="text"] {
       font-size: 16px;
-      min-height: 48px;
+      min-height: 42px;
       width: 100%;
       display: block;
       border: none;
