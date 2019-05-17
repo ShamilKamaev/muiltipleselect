@@ -15,7 +15,12 @@
   import selectSingle from './components/multiselect-types/select-single'
 
   export default {
+<<<<<<< HEAD
     name: 'm-select',
+=======
+    
+    name: 'MultiSelect',
+>>>>>>> 6ed460df09ce5390a4ebdf7e701c8c9bc8b4388e
 
     components: {
       'select-multiple': selectMultiple,
