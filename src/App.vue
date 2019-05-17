@@ -5,12 +5,12 @@
 </template>
 
 <script>
-  
   import selectMultiple from './components/multiselect-types/select-multiple'
   import selectCheckbox from './components/multiselect-types/select-checkbox'
   import selectSingle from './components/multiselect-types/select-single'
 
   export default {
+    
     name: 'MultiSelect',
 
     components: {
