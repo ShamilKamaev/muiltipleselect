@@ -16,10 +16,15 @@
 
   export default {
 <<<<<<< HEAD
+<<<<<<< HEAD
     name: 'm-select',
-
+=======
+    
     name: 'MultiSelect',
 >>>>>>> 6ed460df09ce5390a4ebdf7e701c8c9bc8b4388e
+=======
+    name: 'm-select',
+>>>>>>> 729815f9488435aac182bd5c0b83a45acfb49e8d
 
     components: {
       'select-multiple': selectMultiple,
@@ -237,8 +242,6 @@
       }
     }
   }
-
-
 
     // animations
   .fade-zoom-enter-active {
