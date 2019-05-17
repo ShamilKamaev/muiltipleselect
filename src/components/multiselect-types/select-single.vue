@@ -91,7 +91,7 @@
             method: 'get',
             url: 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/',
             params: {
-              clinicId: 208954,
+              clinicId: this.clicnicId,
               term: val
             },
           }).then(response => {

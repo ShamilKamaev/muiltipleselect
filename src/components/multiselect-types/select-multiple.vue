@@ -40,6 +40,18 @@
       }
     },
 
+    props: {
+      clicnicId: {
+        type: Integer,
+        required: true
+      },
+
+      branchesIds: {
+        type: Array,
+        required: false,
+      }
+    },
+
     computed: {
       textSearchStatus() {
         return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выбирите услуги'
@@ -76,7 +88,7 @@
             method: 'get',
             url: 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/',
             params: {
-              clinicId: 208954,
+              clinicId: this.clicnicId,
               term: val
             },
           }).then(response => {
