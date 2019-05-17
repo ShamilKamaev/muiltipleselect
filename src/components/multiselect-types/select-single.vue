@@ -36,13 +36,18 @@
     },
 
     props: {
-      clicnicId: {
+      clinicId: {
         required: true
       },
 
       branchesIds: {
         type: Array,
         required: false,
+      },
+
+      apiUrl: {
+        type: String,
+        required: true
       }
     },
 
@@ -100,7 +105,7 @@
           let buildedArr = [];
           axios({
             method: 'get',
-            url: 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/',
+            url: thsi.apiUrl,
             params: {
               clinicId: this.clicnicId,
               term: val

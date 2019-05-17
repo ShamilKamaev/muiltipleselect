@@ -3,7 +3,7 @@
      :class="{'is-active': contFocus}"
       v-on-clickaway="handleFocusOut"
       @click="handleFocus">
-      <ul class="slected-services" v-show="selectedServices.length !== 0">
+       <ul class="slected-services" v-show="selectedServices.length !== 0">
         <transition-group name="fade-zoom">
           <li v-for="(service, index) in selectedServices" :key="service.id">{{ service.label }} <i @click="removeSelected(index)"></i></li>
         </transition-group>
@@ -41,13 +41,18 @@
     },
 
     props: {
-      clicnicId: {
+      clinicId: {
         required: true
       },
 
       branchesIds: {
         type: Array,
         required: false,
+      },
+
+      apiUrl: {
+        type: String,
+        required: true
       }
     },
 
@@ -85,7 +90,7 @@
           let buildedArr = [];
           axios({
             method: 'get',
-            url: 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/',
+            url: this.apiUrl,
             params: {
               clinicId: this.clicnicId,
               term: val

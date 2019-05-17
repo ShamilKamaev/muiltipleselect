@@ -56,15 +56,44 @@
     },
 
     props: {
-      clicnicId: {
+      alreadySelected: {
+        type: Array
+      },
+
+      clinicId: {
         required: true
       },
 
       branchesIds: {
         type: Array,
         required: false,
+      },
+
+      apiUrl: {
+        type: String,
+        required: true
       }
     },
+    
+
+    created() {
+      if (this.alreadySelected !== 0) {
+        this.alreadySelected.forEach(elem => {
+          elem.id = elem.id.toString();
+          elem.parent = true;
+          elem.checkedSum = 0;
+          if ('children' in elem) {
+            elem.children.forEach(childElem => {
+              childElem.id = childElem.id.toString();
+              childElem.parent = false;
+            });
+          }
+          this.queryCache.push(elem);
+          this.selectedParents.push(elem);
+        })
+      }
+    },
+
 
     computed: {
       textSearchStatus() {
@@ -241,16 +270,15 @@
           this.loadedServices = [];
         }
         if (val.length == 3) {
-          let buildedArr = [];
           axios({
             method: 'get',
-            url: 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/',
+            url: this.apiUrl,
             params: {
               clinicId: this.clicnicId,
               term: val
             },
           }).then(response => {
-            this.searchStatus = true;
+            
             response.data.results.forEach(elem => {
               elem.id = elem.id.toString();
               elem.checked = false;
@@ -263,15 +291,13 @@
                   childElem.checked = false;
                 });
               }
-              
-              buildedArr.push(elem);
-
-              if(this.queryCache.length !== 0 && !this.queryCache.some(item => item.label == elem.label)) {
+              if(this.queryCache.length !== 0 && !this.queryCache.some(item => item.id.toString() == elem.id.toString())) {
                 this.queryCache.push(elem);
               } else if(this.queryCache.length == 0) {
                 this.queryCache.push(elem);
               }
             })
+            this.searchStatus = true;
           })
         }
       }
