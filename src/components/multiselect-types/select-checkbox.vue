@@ -76,8 +76,8 @@
     },
     
 
-    created() {
-      if (this.alreadySelected !== 0) {
+    mounted() {
+      if (this.alreadySelected.length !== 0) {
         this.alreadySelected.forEach(elem => {
           elem.id = elem.id.toString();
           elem.parent = true;

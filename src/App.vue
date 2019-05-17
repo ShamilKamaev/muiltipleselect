@@ -4,7 +4,8 @@
     <!-- <component 
       :is="'select-checkbox'" 
       :clinic-id="15212" 
-      :api-url="'http://spb.p.test.napopravku.ru/profile/load-smd-tree/'" ></component> -->
+      :api-url="'http://spb.p.test.napopravku.ru/profile/load-smd-tree/'"
+      :already-selected="[]"></component> -->
   </div>
 </template>
 
