@@ -42,7 +42,6 @@
 
     props: {
       clicnicId: {
-        type: Integer,
         required: true
       },
 

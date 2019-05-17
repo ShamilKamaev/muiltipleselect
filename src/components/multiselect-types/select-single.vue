@@ -35,6 +35,17 @@
       }
     },
 
+    props: {
+      clicnicId: {
+        required: true
+      },
+
+      branchesIds: {
+        type: Array,
+        required: false,
+      }
+    },
+
     methods: {
       handleFocusOut() {
         this.contFocus = false;

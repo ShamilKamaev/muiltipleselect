@@ -1,5 +1,5 @@
 <template>
-  <div id="multiselct">
+  <div id="multiselect">
     <component :is="selectType" :select-type="selectType" :clicnic-id="clinicId"></component>
   </div>
 </template>
@@ -31,7 +31,6 @@
       }, 
 
       clicnicId: {
-        type: Integer,
         required: true
       }
     }
