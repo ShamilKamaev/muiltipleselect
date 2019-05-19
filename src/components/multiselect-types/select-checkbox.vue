@@ -284,6 +284,10 @@
 
 
     watch: {
+      selectedParents() {
+        this.$emit('input', this.selectedParents)
+      },
+
       searchString: function (val) {
         if ((val.length < 3)) {
           this.searchStatus = false;

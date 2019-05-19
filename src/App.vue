@@ -1,6 +1,6 @@
 <template>
   <div id="m-select">
-    <component :is="selectType" :clinic-id="clinicId" :branches-ids="branchesIds" :api-url="apiUrl" :already-selected="alreadySelected"></component>
+    <component :is="selectType" :clinic-id="clinicId" :branches-ids="branchesIds" :api-url="apiUrl" :already-selected="value" @input="inputTrigger"></component>
     <!-- <component 
       :is="'select-checkbox'" 
       :clinic-id="15212" 
@@ -25,6 +25,13 @@
       'select-single': selectSingle,
     },
 
+    methods: {
+      inputTrigger(val) {
+        console.log(val);
+        this.$emit('input', val)
+      }
+    },
+
     // data() {
     //   return {
     //     test:
@@ -40,7 +47,18 @@
     //   }
     // },
 
+    watch: {
+      value() {
+        this.$emit('input', )
+      }
+    },
+
     props: {
+      value: {
+        type: Array,
+        required: true
+      }, 
+
       selectType: {
         type: String,
         required: false,
@@ -49,21 +67,21 @@
         }
       },
 
-      alreadySelected: {
-        type: Array,
-        required: false
-        // default() {
-        //   return [{
-        //       "id": 779071,
-        //       "label": "МРТ детям",
-        //       checked: true,
-        //       children: [
-        //         {"id": 779074, "label": "МРТ тест 1", checked: true},
-        //         {"id": 779073, "label": "МРТ тест 2", checked: false}
-        //       ]
-        //   }];
-        // }
-      },
+      // alreadySelected: {
+      //   type: Array,
+      //   required: false
+      //   // default() {
+      //   //   return [{
+      //   //       "id": 779071,
+      //   //       "label": "МРТ детям",
+      //   //       checked: true,
+      //   //       children: [
+      //   //         {"id": 779074, "label": "МРТ тест 1", checked: true},
+      //   //         {"id": 779073, "label": "МРТ тест 2", checked: false}
+      //   //       ]
+      //   //   }];
+      //   // }
+      // },
 
       branchesIds: {
         type: Array,
@@ -71,7 +89,7 @@
       }, 
 
       clinicId: {
-        required: false,
+        required: true,
         // default() {
         //   return 15212;
         // }
