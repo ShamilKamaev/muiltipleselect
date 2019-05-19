@@ -66,9 +66,9 @@
     props: {
       alreadySelected: {
         type: Array,
-        default() {
-          return [];
-        }
+        // default() {
+        //   return [];
+        // }
       },
 
       branchesIds: {

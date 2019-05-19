@@ -2,7 +2,7 @@
   <div id="m-select">
     <component :is="selectType" :clinic-id="clinicId" :branches-ids="branchesIds" :api-url="apiUrl" :already-selected="alreadySelected"></component>
     <!-- <component 
-      :is="'select-multiple'" 
+      :is="'select-checkbox'" 
       :clinic-id="15212" 
       :api-url="'http://spb.p.test.napopravku.ru/profile/load-smd-tree/'"
       :already-selected="test"
@@ -25,20 +25,20 @@
       'select-single': selectSingle,
     },
 
-    data() {
-      return {
-        // test:
-        // [{
-        //     "id": 779071,
-        //     "label": "МРТ детям",
-        //     checked: false,
-        //     children: [
-        //         {"id": 779074, "label": "МРТ тест 1", checked: true},
-        //         {"id": 779073, "label": "МРТ тест 2", checked: true}
-        //     ]
-        // }]
-      }
-    },
+    // data() {
+    //   return {
+    //     test:
+    //     [{
+    //         "id": 779071,
+    //         "label": "МРТ детям",
+    //         checked: false,
+    //         children: [
+    //             {"id": 779074, "label": "МРТ тест 1", checked: true},
+    //             {"id": 779073, "label": "МРТ тест 2", checked: true}
+    //         ]
+    //     }]
+    //   }
+    // },
 
     props: {
       selectType: {
@@ -49,20 +49,21 @@
         }
       },
 
-      // alreadySelected: {
-      //   type: Array,
-      //   default() {
-      //     return [{
-      //         "id": 779071,
-      //         "label": "МРТ детям",
-      //         checked: true,
-      //         children: [
-      //           {"id": 779074, "label": "МРТ тест 1", checked: true},
-      //           {"id": 779073, "label": "МРТ тест 2", checked: false}
-      //         ]
-      //     }];
-      //   }
-      // },
+      alreadySelected: {
+        type: Array,
+        required: false
+        // default() {
+        //   return [{
+        //       "id": 779071,
+        //       "label": "МРТ детям",
+        //       checked: true,
+        //       children: [
+        //         {"id": 779074, "label": "МРТ тест 1", checked: true},
+        //         {"id": 779073, "label": "МРТ тест 2", checked: false}
+        //       ]
+        //   }];
+        // }
+      },
 
       branchesIds: {
         type: Array,
@@ -71,17 +72,17 @@
 
       clinicId: {
         required: false,
-        default() {
-          return 15212;
-        }
+        // default() {
+        //   return 15212;
+        // }
       },
 
       apiUrl: {
         type: String,
         required: false,
-        default() {
-          return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
-        }
+        // default() {
+        //   return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
+        // }
       }
     }
   }
