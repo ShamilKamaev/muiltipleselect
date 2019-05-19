@@ -2,10 +2,11 @@
   <div id="m-select">
     <component :is="selectType" :clinic-id="clinicId" :branches-ids="branchesIds" :api-url="apiUrl" :already-selected="alreadySelected"></component>
     <!-- <component 
-      :is="'select-checkbox'" 
+      :is="'select-multiple'" 
       :clinic-id="15212" 
       :api-url="'http://spb.p.test.napopravku.ru/profile/load-smd-tree/'"
-      :already-selected="[]"></component> -->
+      :already-selected="test"
+></component> -->
   </div>
 </template>
 
@@ -13,6 +14,7 @@
   import selectMultiple from './components/multiselect-types/select-multiple'
   import selectCheckbox from './components/multiselect-types/select-checkbox'
   import selectSingle from './components/multiselect-types/select-single'
+  
 
   export default {
     name: 'm-select',
@@ -23,11 +25,44 @@
       'select-single': selectSingle,
     },
 
+    data() {
+      return {
+        // test:
+        // [{
+        //     "id": 779071,
+        //     "label": "МРТ детям",
+        //     checked: false,
+        //     children: [
+        //         {"id": 779074, "label": "МРТ тест 1", checked: true},
+        //         {"id": 779073, "label": "МРТ тест 2", checked: true}
+        //     ]
+        // }]
+      }
+    },
+
     props: {
       selectType: {
         type: String,
-        required: true
+        required: false,
+        default() {
+          return 'select-checkbox';
+        }
       },
+
+      // alreadySelected: {
+      //   type: Array,
+      //   default() {
+      //     return [{
+      //         "id": 779071,
+      //         "label": "МРТ детям",
+      //         checked: true,
+      //         children: [
+      //           {"id": 779074, "label": "МРТ тест 1", checked: true},
+      //           {"id": 779073, "label": "МРТ тест 2", checked: false}
+      //         ]
+      //     }];
+      //   }
+      // },
 
       branchesIds: {
         type: Array,
@@ -35,12 +70,18 @@
       }, 
 
       clinicId: {
-        required: true
+        required: false,
+        default() {
+          return 15212;
+        }
       },
 
       apiUrl: {
         type: String,
-        required: true
+        required: false,
+        default() {
+          return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
+        }
       }
     }
   }
@@ -131,8 +172,6 @@
             background-color: transparent;
           }
         }
-
-
         span {
           position: relative;
           cursor: pointer;
@@ -151,7 +190,7 @@
         
 
         &.is-checked {
-          &>span {
+          &>div>span {
             &::after {
               border-color: #40b3b7;
               background-color: #40b3b7;
@@ -167,7 +206,7 @@
         padding-left: 50px;
         padding-top: 0;
         padding-bottom: 0;
-        &>span {
+        span {
           display: block;
           padding-top: 15px;
           padding-bottom: 15px;

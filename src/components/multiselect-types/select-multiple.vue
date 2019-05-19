@@ -16,7 +16,7 @@
         ref="tetxtInput">
       <ul class="services-list">
         <li class="not-found" v-if="searchStatus && searchString.length > 2 && filtredServices.length == 0">Совпадений не найдено</li>
-        <li v-for="service in filtredServices" :key="service.id" @click="addService(service)">{{ service.label }}</li>
+        <li v-for="service in filtredServices" :key="service.id" @click="addService(service)"><text-highlight :queries="searchString">{{ service.label }} </text-highlight></li>
       </ul>
     </div>
   </template>
@@ -24,10 +24,15 @@
   <script>
   import axios from 'axios'
   import { mixin as clickaway } from 'vue-clickaway';
-  
+  import TextHighlight from 'vue-text-highlight';
+
   export default {
     name: 'select-multiple',
     mixins: [ clickaway ],
+
+    components: {
+      'text-highlight': TextHighlight
+    },
 
     data() {
       return {
@@ -41,18 +46,31 @@
     },
 
     props: {
-      clinicId: {
-        required: true
+      alreadySelected: {
+        type: Array,
+        default() {
+          return [];
+        }
       },
 
       branchesIds: {
         type: Array,
         required: false,
+      }, 
+
+      clinicId: {
+        required: false,
+        default() {
+          return 15212;
+        }
       },
 
       apiUrl: {
         type: String,
-        required: true
+        required: false,
+        default() {
+          return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
+        }
       }
     },
 
@@ -116,6 +134,30 @@
           })
         }
       }
+    },
+    
+
+    created() {
+      this.alreadySelected.forEach(elem => {
+        if(elem.checked == true) {
+            this.selectedServices.push({
+            id: elem.id,
+            label: elem.label
+          })
+        }
+        if ('children' in elem) {
+          elem.children.forEach(childrenElem => {
+            if(childrenElem.checked == true) {
+                this.selectedServices.push({
+                id: childrenElem.id,
+                label: childrenElem.label
+              });
+            }
+          })
+        }
+      })
+
+      
     },
 
     methods: {

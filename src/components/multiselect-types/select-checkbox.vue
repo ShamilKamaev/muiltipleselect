@@ -20,12 +20,15 @@
         <li 
           v-for="service in filtredServices" 
           :key="service.id"
-          :class="{'is-checked': service.checked}"><span @click="addParent(service)">{{ service.label }}</span> 
+          :class="{'is-checked': service.checked}">
+          <div @click.stop="addParent(service)"><text-highlight :queries="searchString">{{ service.label }}</text-highlight></div>
           <ul>
             <li 
               v-for="childService in service.children" 
               :key="childService.id"
-              :class="{'is-checked': childService.checked}"><span @click="addParent(childService)">{{ childService.label }}</span></li>
+              :class="{'is-checked': childService.checked}">
+              <div @click.stop="addParent(childService)"><text-highlight :queries="searchString">{{ childService.label }}</text-highlight></div>
+              </li>
           </ul>
         </li>
       </ul>
@@ -35,15 +38,20 @@
   <script>
   import axios from 'axios'
   import { mixin as clickaway } from 'vue-clickaway';
+  import TextHighlight from 'vue-text-highlight';
 
 
   export default {
     name: 'select-checkbox',
 
     mixins: [ clickaway ],
+    components: {
+      'text-highlight': TextHighlight
+    },
 
     data() {
       return {
+        qstatus: false,
         contFocus: false,
         textFieldFocus: false,
         searchStatus: false,
@@ -57,41 +65,56 @@
 
     props: {
       alreadySelected: {
-        type: Array
-      },
-
-      clinicId: {
-        required: true
+        type: Array,
+        default() {
+          return [];
+        }
       },
 
       branchesIds: {
         type: Array,
         required: false,
+      }, 
+
+      clinicId: {
+        required: false,
+        default() {
+          return 15212;
+        }
       },
 
       apiUrl: {
         type: String,
-        required: true
+        required: false,
+        default() {
+          return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
+        }
       }
     },
     
 
+    created() {
+        if (this.alreadySelected.length !== 0) {
+          this.alreadySelected.forEach(elem => {
+            elem.id = elem.id.toString();
+            elem.parent = true;
+            elem.checkedSum = 0;
+            if ('children' in elem) {
+              elem.children.forEach(childElem => {
+                childElem.id = childElem.id.toString();
+                childElem.parent = false;
+              });
+            }
+            this.queryCache.push(elem);
+          })
+        }
+      
+    },
+
     mounted() {
-      if (this.alreadySelected.length !== 0) {
-        this.alreadySelected.forEach(elem => {
-          elem.id = elem.id.toString();
-          elem.parent = true;
-          elem.checkedSum = 0;
-          if ('children' in elem) {
-            elem.children.forEach(childElem => {
-              childElem.id = childElem.id.toString();
-              childElem.parent = false;
-            });
-          }
-          this.queryCache.push(elem);
-          this.selectedParents.push(elem);
-        })
-      }
+      this.queryCache.forEach(item => {
+        this.selectedParents.push(item);
+      })
     },
 
 
@@ -129,41 +152,42 @@
       filtredServices() {
         var mapedArr = [];
         var filtredArr = [];
-
-
         
           mapedArr = this.queryCache.map((item, index) => {
-            if ('children' in item) {
-              item.children.forEach(childElem => {
-                childElem.parentId = item.id.toString();
-              });
+            if(this.qstatus) {
+              if ('children' in item) {
+                item.children.forEach(childElem => {
+                  childElem.parentId = item.id.toString();
+                });
+              }
+              
+              if (this.selectedIds.some(elem => elem.toString() == item.id.toString())) {
+                  item.checked = true;
+              } else {
+                  item.checked = false;
+              }
+
+              if ('children' in item) {
+                item.children.forEach(childItem => {
+                  if (this.selectedIds.some(elem => elem.toString() == childItem.id.toString())) {
+                    childItem.checked = true;
+                  } else {
+                    childItem.checked = false;
+                  }
+                });
+              }
             }
             
-            if (this.selectedIds.some(elem => elem.toString() == item.id.toString())) {
-              item.checked = true;
-            } else {
-              item.checked = false;
-            }
 
-
-            if ('children' in item) {
-              item.children.forEach(childItem => {
-                if (this.selectedIds.some(elem => elem.toString() == childItem.id.toString())) {
-                  childItem.checked = true;
-                } else {
-                  childItem.checked = false;
-                }
-              });
-            }
             if('children' in item) {
               item.checkedSelf = item.checked ? 1 : 0;
               item.checkedAll = item.children.length + 1;
               item.checkedSum = item.children.filter(elem => elem.checked == true).length + item.checkedSelf;
               item.checkedStatus = '(' + item.checkedSum + ' из ' + item.checkedAll + ')';
+              this.$forceUpdate();
             } else {
               item.checkedStatus = '(1 из 1)';
             }
-            
             return item;
           })
         
@@ -182,8 +206,6 @@
     },
 
     
-
-
     methods: {
       handleFocus() {
         this.contFocus = true;
@@ -254,8 +276,6 @@
         }
       },
 
-
-
       removeService(index) {
         this.selectedParents.splice(index, 1);
       }
@@ -270,6 +290,7 @@
           this.loadedServices = [];
         }
         if (val.length == 3) {
+          this.qstatus = true;
           axios({
             method: 'get',
             url: this.apiUrl,
