@@ -66,29 +66,32 @@
     props: {
       alreadySelected: {
         type: Array,
-        // default() {
-        //   return [];
-        // }
+        default() {
+          return [];
+        }
       },
 
       branchesIds: {
         type: Array,
         required: false,
+        // default() {
+        //   return 15212;
+        // }
       }, 
 
       clinicId: {
         required: false,
-        default() {
-          return 15212;
-        }
+        // default() {
+        //   return 15212;
+        // }
       },
 
       apiUrl: {
         type: String,
         required: false,
-        default() {
-          return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
-        }
+        // default() {
+        //   return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
+        // }
       }
     },
     
@@ -299,7 +302,8 @@
             method: 'get',
             url: this.apiUrl,
             params: {
-              clinicId: this.clicnicId,
+              clinicId: this.clinicId,
+              branchesIds: this.branchesIds,
               term: val
             },
           }).then(response => {

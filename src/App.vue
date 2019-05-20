@@ -32,24 +32,28 @@
       }
     },
 
-    // data() {
-    //   return {
-    //     test:
-    //     [{
-    //         "id": 779071,
-    //         "label": "МРТ детям",
-    //         checked: false,
-    //         children: [
-    //             {"id": 779074, "label": "МРТ тест 1", checked: true},
-    //             {"id": 779073, "label": "МРТ тест 2", checked: true}
-    //         ]
-    //     }]
-    //   }
-    // },
+    data() {
+      return {
+        valueUpdateIteration: 0
+      //   test:
+      //   [{
+      //       "id": 779071,
+      //       "label": "МРТ детям",
+      //       checked: false,
+      //       children: [
+      //           {"id": 779074, "label": "МРТ тест 1", checked: true},
+      //           {"id": 779073, "label": "МРТ тест 2", checked: true}
+      //       ]
+      //   }]
+      }
+    },
 
     watch: {
-      value() {
-        this.$emit('input', )
+      value(val) {
+        this.valueUpdateIteration++;
+        if(this.valueUpdateIteration > 1) {
+          this.$emit('input', val);
+        }
       }
     },
 
@@ -62,26 +66,10 @@
       selectType: {
         type: String,
         required: false,
-        default() {
-          return 'select-checkbox';
-        }
+        // default() {
+        //   return 'select-checkbox';
+        // }
       },
-
-      // alreadySelected: {
-      //   type: Array,
-      //   required: false
-      //   // default() {
-      //   //   return [{
-      //   //       "id": 779071,
-      //   //       "label": "МРТ детям",
-      //   //       checked: true,
-      //   //       children: [
-      //   //         {"id": 779074, "label": "МРТ тест 1", checked: true},
-      //   //         {"id": 779073, "label": "МРТ тест 2", checked: false}
-      //   //       ]
-      //   //   }];
-      //   // }
-      // },
 
       branchesIds: {
         type: Array,
@@ -89,7 +77,7 @@
       }, 
 
       clinicId: {
-        required: true,
+        required: false,
         // default() {
         //   return 15212;
         // }
@@ -97,7 +85,7 @@
 
       apiUrl: {
         type: String,
-        required: false,
+        required: true,
         // default() {
         //   return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
         // }
@@ -282,7 +270,8 @@
         height: 24px;
         background-color: transparent;
         border-radius: 50%;
-        top: 2px;
+        top: 50%;
+        transform: translateY(-50%);
         right: 2px;
         background-image: url("data:image/svg+xml,%3Csvg width='9' height='9' viewBox='0 0 9 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect y='7.7782' width='11' height='1' transform='rotate(-45 0 7.7782)' fill='white'/%3E%3Crect x='0.707153' width='11' height='1' transform='rotate(45 0.707153 0)' fill='white'/%3E%3C/svg%3E");
         background-position: center;
