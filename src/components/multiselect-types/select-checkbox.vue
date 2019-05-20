@@ -3,13 +3,10 @@
         :class="{'is-active': contFocus}"
         v-on-clickaway="handleFocusOut"
         @click="handleFocus"
-        ref="mscont"
         >
-      <ul class="slected-services" v-show="selectedParents.length !== 0">
-        <transition-group name="fade-zoom">
-          <li v-for="(service, index) in selectedParents" :key="service.id">{{ service.label }} {{ service.checkedStatus }}<i @click="removeService(index)"></i></li>
-        </transition-group>
-      </ul>
+      <transition-group name="fade-zoom" tag="ul" class="slected-services" v-show="selectedParents.length !== 0">
+        <li v-for="(service, index) in selectedParents" :key="service.id">{{ service.label }} {{ service.checkedStatus }}<i @click="removeService(index)"></i></li>
+      </transition-group>
       <input type="text" 
         v-model="searchString"
         :placeholder="textSearchStatus"

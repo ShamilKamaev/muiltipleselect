@@ -4,6 +4,7 @@
     <!-- <component 
       :is="'select-checkbox'" 
       :clinic-id="15212" 
+      :branches-ids="branchesIds"
       :api-url="'http://spb.p.test.napopravku.ru/profile/load-smd-tree/'"
       :already-selected="test"
 ></component> -->
@@ -27,24 +28,22 @@
 
     methods: {
       inputTrigger(val) {
-        console.log(val);
         this.$emit('input', val)
       }
     },
 
     data() {
       return {
-        valueUpdateIteration: 0
-      //   test:
-      //   [{
-      //       "id": 779071,
-      //       "label": "МРТ детям",
-      //       checked: false,
-      //       children: [
-      //           {"id": 779074, "label": "МРТ тест 1", checked: true},
-      //           {"id": 779073, "label": "МРТ тест 2", checked: true}
-      //       ]
-      //   }]
+        valueUpdateIteration: 0,
+        // test: [{
+        //     "id": 779071,
+        //     "label": "МРТ детям",
+        //     checked: false,
+        //     children: [
+        //         {"id": 779074, "label": "МРТ тест 1", checked: true},
+        //         {"id": 779073, "label": "МРТ тест 2", checked: true}
+        //     ]
+        // }]
       }
     },
 
