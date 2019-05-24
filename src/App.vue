@@ -14,8 +14,8 @@
       :branches-ids="branchesIds"
       :api-url="'http://spb.p.test.napopravku.ru/profile/load-smd-tree/'"
       :already-selected="test"
-      @input="inputTrigger"
-></component> -->
+      @input="inputTrigger">
+    </component> -->
   </div>
 </template>
 
@@ -44,21 +44,21 @@
       }
     },
 
-    data() {
-      return {
-        // test: [
-        //   {
-        //     "id": 779071,
-        //     "label": "МРТ детям",
-        //     checked: false,
-        //     children: [
-        //         {"id": 779074, "label": "МРТ тест 1", checked: true},
-        //         {"id": 779073, "label": "МРТ тест 2", checked: true}
-        //     ]
-        //   }
-        // ]
-      }
-    },
+    // data() {
+    //   return {
+    //     test: [
+    //       {
+    //         "id": 779071,
+    //         "label": "МРТ детям",
+    //         checked: false,
+    //         children: [
+    //             {"id": 779074, "label": "МРТ тест 1", checked: true},
+    //             {"id": 779073, "label": "МРТ тест 2", checked: true}
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
 
     watch: {
       value(val) {

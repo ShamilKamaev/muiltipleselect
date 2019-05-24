@@ -42,7 +42,7 @@
   import axios from 'axios'
   import { mixin as clickaway } from 'vue-clickaway';
   import TextHighlight from 'vue-text-highlight';
-  import vueCustomScrollbar from 'vue-custom-scrollbar'
+  // import vueCustomScrollbar from 'vue-custom-scrollbar'
 
 
   export default {
@@ -51,7 +51,7 @@
     mixins: [ clickaway ],
     components: {
       'text-highlight': TextHighlight,
-      vueCustomScrollbar
+      // vueCustomScrollbar
     },
 
     data() {
@@ -62,8 +62,6 @@
         textFieldFocus: false,
         searchStatus: false,
         searchString: '',
-        loadedServices: [],
-        selectedServices: [],
         selectedParents: [],
         queryCache: [],
       }
@@ -313,7 +311,6 @@
       selectedParents: {
         handler: function(newVal) {
           if(this.changeIteration > 0) {
-            console.log('hoy');
             this.$emit('input', newVal)
           }
         },
@@ -323,7 +320,6 @@
       searchString: function (val) {
         if ((val.length < 3)) {
           this.searchStatus = false;
-          this.loadedServices = [];
         }
         if (val.length == 3) {
           this.qstatus = true;
