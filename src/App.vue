@@ -37,8 +37,6 @@
     methods: {
       inputTrigger(val) {
         if(this.changeIteration > 0) {
-          console.log(this.changeIteration);
-          console.log('change detected');
           this.$emit('input', val);
         }
       }

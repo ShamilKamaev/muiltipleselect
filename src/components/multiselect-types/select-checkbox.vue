@@ -353,7 +353,6 @@
             this.searchStatus = true;
           }).catch(error => {
             console.log(error);
-            
           })
         }
       }
