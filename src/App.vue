@@ -36,24 +36,24 @@
 
     methods: {
       inputTrigger(val) {
-        if(this.changeIteration > 0) {
-          this.$emit('input', val);
-        }
+        console.log('hoy');
+        
+        this.$emit('input', val);
       }
     },
 
     // data() {
     //   return {
     //     test: [
-    //       {
-    //         "id": 779071,
-    //         "label": "МРТ детям",
-    //         checked: false,
-    //         children: [
-    //             {"id": 779074, "label": "МРТ тест 1", checked: true},
-    //             {"id": 779073, "label": "МРТ тест 2", checked: true}
-    //         ]
-    //       }
+    //       // {
+    //       //   "id": 779071,
+    //       //   "label": "МРТ детям",
+    //       //   checked: false,
+    //       //   children: [
+    //       //       {"id": 779074, "label": "МРТ тест 1", checked: true},
+    //       //       {"id": 779073, "label": "МРТ тест 2", checked: true}
+    //       //   ]
+    //       // }
     //     ]
     //   }
     // },

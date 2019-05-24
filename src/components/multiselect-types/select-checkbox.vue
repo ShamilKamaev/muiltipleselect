@@ -16,25 +16,23 @@
           @blur="textFieldFocus = false">
           <!-- <span class="progress"></span> -->
       </div>
-      <vue-custom-scrollbar class="scroll-area">
-        <ul class="services-list services-list_checboxes">
-          <li class="not-found" v-if="searchStatus && searchString.length > 2 && filtredServices.length == 0">Совпадений не найдено</li>
-          <li 
-            v-for="service in filtredServices" 
-            :key="service.id"
-            :class="{'is-checked': service.checked}">
-            <div @click.stop="addParent(service)"><text-highlight :queries="searchString">{{ service.label }}</text-highlight></div>
-            <ul>
-              <li 
-                v-for="childService in service.children" 
-                :key="childService.id"
-                :class="{'is-checked': childService.checked}">
-                <div @click.stop="addParent(childService)"><text-highlight :queries="searchString">{{ childService.label }}</text-highlight></div>
-                </li>
-            </ul>
-          </li>
-        </ul>
-      </vue-custom-scrollbar>
+      <ul class="services-list services-list_checboxes">
+        <li class="not-found" v-if="searchStatus && searchString.length > 2 && filtredServices.length == 0">Совпадений не найдено</li>
+        <li 
+          v-for="service in filtredServices" 
+          :key="service.id"
+          :class="{'is-checked': service.checked}">
+          <div @click.stop="addParent(service)"><text-highlight :queries="searchString">{{ service.label }}</text-highlight></div>
+          <ul>
+            <li 
+              v-for="childService in service.children" 
+              :key="childService.id"
+              :class="{'is-checked': childService.checked}">
+              <div @click.stop="addParent(childService)"><text-highlight :queries="searchString">{{ childService.label }}</text-highlight></div>
+              </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </template>
 
