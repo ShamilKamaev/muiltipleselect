@@ -36,35 +36,34 @@
 
     methods: {
       inputTrigger(val) {
-        console.log('change detected');
-        this.$emit('input', val)
+        if(this.changeIteration > 0) {
+          console.log(this.changeIteration);
+          console.log('change detected');
+          this.$emit('input', val);
+        }
       }
     },
 
-    // data() {
-    //   return {
-    //     test: [
-    //       {
-    //         "id": 779071,
-    //         "label": "МРТ детям",
-    //         checked: false,
-    //         children: [
-    //             {"id": 779074, "label": "МРТ тест 1", checked: true},
-    //             {"id": 779073, "label": "МРТ тест 2", checked: true}
-    //         ]
-    //       }
-    //     ]
-    //   }
-    // },
+    data() {
+      return {
+        // test: [
+        //   {
+        //     "id": 779071,
+        //     "label": "МРТ детям",
+        //     checked: false,
+        //     children: [
+        //         {"id": 779074, "label": "МРТ тест 1", checked: true},
+        //         {"id": 779073, "label": "МРТ тест 2", checked: true}
+        //     ]
+        //   }
+        // ]
+      }
+    },
 
     watch: {
       value(val) {
         this.$emit('input', val);
       }
-    },
-
-    updated() {
-      console.log('change detected');
     },
 
     props: {

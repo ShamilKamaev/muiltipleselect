@@ -3037,12 +3037,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=18c2ba33&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=0d680b22&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"m-select"}},[_c(_vm.selectType,{tag:"component",attrs:{"clinic-id":_vm.clinicId,"branches-ids":_vm.branchesIds,"api-url":_vm.apiUrl,"already-selected":_vm.value},on:{"input":_vm.inputTrigger}})],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=18c2ba33&
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=0d680b22&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-multiple.vue?vue&type=template&id=4529f19c&
 var select_multiplevue_type_template_id_4529f19c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('ul',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedServices.length !== 0),expression:"selectedServices.length !== 0"}],staticClass:"slected-services"},[_c('transition-group',{attrs:{"name":"fade-zoom"}},_vm._l((_vm.selectedServices),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "),_c('i',{on:{"click":function($event){return _vm.removeSelected(index)}}})])}),0)],1),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],ref:"tetxtInput",attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('ul',{staticClass:"services-list"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,on:{"click":function($event){return _vm.addService(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label)+" ")])],1)})],2)])}
@@ -4628,12 +4628,12 @@ var component = componentNormalizer_normalizeComponent(
 )
 
 /* harmony default export */ var select_multiple = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=579fd670&
-var select_checkboxvue_type_template_id_579fd670_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('transition-group',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedParents.length !== 0),expression:"selectedParents.length !== 0"}],staticClass:"slected-services",attrs:{"name":"fade-zoom","tag":"ul"}},_vm._l((_vm.selectedParents),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "+_vm._s(service.checkedStatus)),_c('i',{on:{"click":function($event){return _vm.removeService(index)}}})])}),0),_c('div',{staticClass:"text-input"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}})]),_c('vue-custom-scrollbar',{staticClass:"scroll-area"},[_c('ul',{staticClass:"services-list services-list_checboxes"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,class:{'is-checked': service.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label))])],1),_c('ul',_vm._l((service.children),function(childService){return _c('li',{key:childService.id,class:{'is-checked': childService.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(childService)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(childService.label))])],1)])}),0)])})],2)])],1)}
-var select_checkboxvue_type_template_id_579fd670_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=6e720913&
+var select_checkboxvue_type_template_id_6e720913_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('transition-group',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedParents.length !== 0),expression:"selectedParents.length !== 0"}],staticClass:"slected-services",attrs:{"name":"fade-zoom","tag":"ul"}},_vm._l((_vm.selectedParents),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "+_vm._s(service.checkedStatus)),_c('i',{on:{"click":function($event){return _vm.removeService(index)}}})])}),0),_c('div',{staticClass:"text-input"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}})]),_c('vue-custom-scrollbar',{staticClass:"scroll-area"},[_c('ul',{staticClass:"services-list services-list_checboxes"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,class:{'is-checked': service.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label))])],1),_c('ul',_vm._l((service.children),function(childService){return _c('li',{key:childService.id,class:{'is-checked': childService.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(childService)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(childService.label))])],1)])}),0)])})],2)])],1)}
+var select_checkboxvue_type_template_id_6e720913_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=579fd670&
+// CONCATENATED MODULE: ./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=6e720913&
 
 // EXTERNAL MODULE: ./node_modules/vue-custom-scrollbar/dist/vueScrollbar.umd.min.js
 var vueScrollbar_umd_min = __webpack_require__("4b70");
@@ -4695,6 +4695,7 @@ var vueScrollbar_umd_min_default = /*#__PURE__*/__webpack_require__.n(vueScrollb
   },
   data: function data() {
     return {
+      changeIteration: 0,
       qstatus: false,
       contFocus: false,
       textFieldFocus: false,
@@ -4756,6 +4757,15 @@ var vueScrollbar_umd_min_default = /*#__PURE__*/__webpack_require__.n(vueScrollb
   },
   mounted: function mounted() {
     var _this2 = this;
+
+    this.$nextTick().then(function () {
+      _this2.changeIteration++;
+    });
+
+    if (this.selectedParents.length !== 0) {
+      this.changeIteration++;
+      this.$forceUpdate();
+    }
 
     this.queryCache.forEach(function (item) {
       _this2.selectedParents.push(item);
@@ -4938,8 +4948,10 @@ var vueScrollbar_umd_min_default = /*#__PURE__*/__webpack_require__.n(vueScrollb
   watch: {
     selectedParents: {
       handler: function handler(newVal) {
-        console.log(newVal);
-        this.$emit('input', newVal);
+        if (this.changeIteration > 0) {
+          console.log('hoy');
+          this.$emit('input', newVal);
+        }
       },
       deep: true
     },
@@ -5004,8 +5016,8 @@ var vueScrollbar_umd_min_default = /*#__PURE__*/__webpack_require__.n(vueScrollb
 
 var select_checkbox_component = componentNormalizer_normalizeComponent(
   multiselect_types_select_checkboxvue_type_script_lang_js_,
-  select_checkboxvue_type_template_id_579fd670_render,
-  select_checkboxvue_type_template_id_579fd670_staticRenderFns,
+  select_checkboxvue_type_template_id_6e720913_render,
+  select_checkboxvue_type_template_id_6e720913_staticRenderFns,
   false,
   null,
   null,
@@ -5208,32 +5220,31 @@ var select_single_component = componentNormalizer_normalizeComponent(
   },
   methods: {
     inputTrigger: function inputTrigger(val) {
-      console.log('change detected');
-      this.$emit('input', val);
+      if (this.changeIteration > 0) {
+        console.log(this.changeIteration);
+        console.log('change detected');
+        this.$emit('input', val);
+      }
     }
   },
-  // data() {
-  //   return {
-  //     test: [
-  //       {
-  //         "id": 779071,
-  //         "label": "МРТ детям",
-  //         checked: false,
-  //         children: [
-  //             {"id": 779074, "label": "МРТ тест 1", checked: true},
-  //             {"id": 779073, "label": "МРТ тест 2", checked: true}
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // },
+  data: function data() {
+    return {// test: [
+      //   {
+      //     "id": 779071,
+      //     "label": "МРТ детям",
+      //     checked: false,
+      //     children: [
+      //         {"id": 779074, "label": "МРТ тест 1", checked: true},
+      //         {"id": 779073, "label": "МРТ тест 2", checked: true}
+      //     ]
+      //   }
+      // ]
+    };
+  },
   watch: {
     value: function value(val) {
       this.$emit('input', val);
     }
-  },
-  updated: function updated() {
-    console.log('change detected');
   },
   props: {
     value: {

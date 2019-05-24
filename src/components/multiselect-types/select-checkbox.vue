@@ -56,6 +56,7 @@
 
     data() {
       return {
+        changeIteration: 0,
         qstatus: false,
         contFocus: false,
         textFieldFocus: false,
@@ -119,6 +120,15 @@
     },
 
     mounted() {
+      this.$nextTick().then(() => {
+        this.changeIteration++;
+      })
+      
+      
+      if(this.selectedParents.length !== 0) {
+        this.changeIteration++;
+        this.$forceUpdate();
+      }
       this.queryCache.forEach(item => {
         this.selectedParents.push(item);
       })
@@ -299,12 +309,13 @@
     },
 
 
-
     watch: {
       selectedParents: {
         handler: function(newVal) {
-          console.log(newVal);
-          this.$emit('input', newVal)
+          if(this.changeIteration > 0) {
+            console.log('hoy');
+            this.$emit('input', newVal)
+          }
         },
         deep: true
       },
