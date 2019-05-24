@@ -7,28 +7,34 @@
       <transition-group name="fade-zoom" tag="ul" class="slected-services" v-show="selectedParents.length !== 0">
         <li v-for="(service, index) in selectedParents" :key="service.id">{{ service.label }} {{ service.checkedStatus }}<i @click="removeService(index)"></i></li>
       </transition-group>
-      <input type="text" 
-        v-model="searchString"
-        :placeholder="textSearchStatus"
-        @focus="textFieldFocus = true"
-        @blur="textFieldFocus = false">
-      <ul class="services-list services-list_checboxes">
-        <li class="not-found" v-if="searchStatus && searchString.length > 2 && filtredServices.length == 0">Совпадений не найдено</li>
-        <li 
-          v-for="service in filtredServices" 
-          :key="service.id"
-          :class="{'is-checked': service.checked}">
-          <div @click.stop="addParent(service)"><text-highlight :queries="searchString">{{ service.label }}</text-highlight></div>
-          <ul>
-            <li 
-              v-for="childService in service.children" 
-              :key="childService.id"
-              :class="{'is-checked': childService.checked}">
-              <div @click.stop="addParent(childService)"><text-highlight :queries="searchString">{{ childService.label }}</text-highlight></div>
-              </li>
-          </ul>
-        </li>
-      </ul>
+      <div class="text-input">
+        <input 
+          type="text" 
+          v-model="searchString"
+          :placeholder="textSearchStatus"
+          @focus="textFieldFocus = true"
+          @blur="textFieldFocus = false">
+          <!-- <span class="progress"></span> -->
+      </div>
+      <vue-custom-scrollbar class="scroll-area">
+        <ul class="services-list services-list_checboxes">
+          <li class="not-found" v-if="searchStatus && searchString.length > 2 && filtredServices.length == 0">Совпадений не найдено</li>
+          <li 
+            v-for="service in filtredServices" 
+            :key="service.id"
+            :class="{'is-checked': service.checked}">
+            <div @click.stop="addParent(service)"><text-highlight :queries="searchString">{{ service.label }}</text-highlight></div>
+            <ul>
+              <li 
+                v-for="childService in service.children" 
+                :key="childService.id"
+                :class="{'is-checked': childService.checked}">
+                <div @click.stop="addParent(childService)"><text-highlight :queries="searchString">{{ childService.label }}</text-highlight></div>
+                </li>
+            </ul>
+          </li>
+        </ul>
+      </vue-custom-scrollbar>
     </div>
   </template>
 
@@ -36,6 +42,7 @@
   import axios from 'axios'
   import { mixin as clickaway } from 'vue-clickaway';
   import TextHighlight from 'vue-text-highlight';
+  import vueCustomScrollbar from 'vue-custom-scrollbar'
 
 
   export default {
@@ -43,7 +50,8 @@
 
     mixins: [ clickaway ],
     components: {
-      'text-highlight': TextHighlight
+      'text-highlight': TextHighlight,
+      vueCustomScrollbar
     },
 
     data() {
@@ -94,21 +102,20 @@
     
 
     created() {
-        if (this.alreadySelected.length !== 0) {
-          this.alreadySelected.forEach(elem => {
-            elem.id = elem.id.toString();
-            elem.parent = true;
-            elem.checkedSum = 0;
-            if ('children' in elem) {
-              elem.children.forEach(childElem => {
-                childElem.id = childElem.id.toString();
-                childElem.parent = false;
-              });
-            }
-            this.queryCache.push(elem);
-          })
-        }
-      
+      if (this.alreadySelected.length !== 0) {
+        this.alreadySelected.forEach(elem => {
+          elem.id = elem.id.toString();
+          elem.parent = true;
+          elem.checkedSum = 0;
+          if ('children' in elem) {
+            elem.children.forEach(childElem => {
+              childElem.id = childElem.id.toString();
+              childElem.parent = false;
+            });
+          }
+          this.queryCache.push(elem);
+        })
+      }
     },
 
     mounted() {
@@ -168,7 +175,15 @@
               }
 
               if ('children' in item) {
-                item.children.forEach(childItem => {
+                item.children.forEach((childItem, index) => {
+                  // передвигаем совпавшие по названию элемнты на верх
+                  // if(childItem.label.toLowerCase().indexOf(this.searchString.toLowerCase()) !== -1) {
+                  //   if(item.children[index + 1] != undefined) {
+                  //     item.children.splice(index, 1);
+                  //     item.children.unshift(childItem);
+                  //   }
+                  // }
+                  ////////////////////////////////////////////////////
                   if (this.selectedIds.some(elem => elem.toString() == childItem.id.toString())) {
                     childItem.checked = true;
                   } else {
@@ -183,6 +198,7 @@
               item.checkedSelf = item.checked ? 1 : 0;
               item.checkedAll = item.children.length + 1;
               item.checkedSum = item.children.filter(elem => elem.checked == true).length + item.checkedSelf;
+              
               item.checkedStatus = '(' + item.checkedSum + ' из ' + item.checkedAll + ')';
               this.$forceUpdate();
             } else {
@@ -212,6 +228,7 @@
       },
 
       handleFocusOut() {
+        this.searchString = '';
         this.contFocus = false;
       },
 
@@ -284,8 +301,12 @@
 
 
     watch: {
-      selectedParents() {
-        this.$emit('input', this.selectedParents)
+      selectedParents: {
+        handler: function(newVal) {
+          console.log(newVal);
+          this.$emit('input', newVal)
+        },
+        deep: true
       },
 
       searchString: function (val) {
@@ -304,7 +325,6 @@
               term: val
             },
           }).then(response => {
-            
             response.data.results.forEach(elem => {
               elem.id = elem.id.toString();
               elem.checked = false;
@@ -324,6 +344,9 @@
               }
             })
             this.searchStatus = true;
+          }).catch(error => {
+            console.log(error);
+            
           })
         }
       }

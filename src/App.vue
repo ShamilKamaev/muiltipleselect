@@ -1,12 +1,20 @@
 <template>
   <div id="m-select">
-    <component :is="selectType" :clinic-id="clinicId" :branches-ids="branchesIds" :api-url="apiUrl" :already-selected="value" @input="inputTrigger"></component>
+    <component 
+      :is="selectType" 
+      :clinic-id="clinicId" 
+      :branches-ids="branchesIds" 
+      :api-url="apiUrl" 
+      :already-selected="value" 
+      @input="inputTrigger">
+    </component>
     <!-- <component 
       :is="'select-checkbox'" 
       :clinic-id="15212" 
       :branches-ids="branchesIds"
       :api-url="'http://spb.p.test.napopravku.ru/profile/load-smd-tree/'"
       :already-selected="test"
+      @input="inputTrigger"
 ></component> -->
   </div>
 </template>
@@ -28,32 +36,35 @@
 
     methods: {
       inputTrigger(val) {
+        console.log('change detected');
         this.$emit('input', val)
       }
     },
 
-    data() {
-      return {
-        valueUpdateIteration: 0,
-        // test: [{
-        //     "id": 779071,
-        //     "label": "МРТ детям",
-        //     checked: false,
-        //     children: [
-        //         {"id": 779074, "label": "МРТ тест 1", checked: true},
-        //         {"id": 779073, "label": "МРТ тест 2", checked: true}
-        //     ]
-        // }]
-      }
-    },
+    // data() {
+    //   return {
+    //     test: [
+    //       {
+    //         "id": 779071,
+    //         "label": "МРТ детям",
+    //         checked: false,
+    //         children: [
+    //             {"id": 779074, "label": "МРТ тест 1", checked: true},
+    //             {"id": 779073, "label": "МРТ тест 2", checked: true}
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
 
     watch: {
       value(val) {
-        this.valueUpdateIteration++;
-        if(this.valueUpdateIteration > 1) {
-          this.$emit('input', val);
-        }
+        this.$emit('input', val);
       }
+    },
+
+    updated() {
+      console.log('change detected');
     },
 
     props: {
@@ -106,15 +117,23 @@
     overflow: hidden;
   }
 
+  .text__highlight {
+    background-color: rgba(64, 179, 183, 0.25) !important;
+    font-style: normal !important;
+  }
+
+
+
   .multi-select__container {
     border-radius: 4px;
     border: solid 1px #bcbcbc;
     box-sizing: border-box;
     overflow: hidden;
-    font-family: Gotham Pro, sans-serif;
+    font-family: GothamPro, sans-serif;
     font-weight: normal;
     outline: none;
     padding: 1px;
+    box-sizing: border-box;
 
     &.is-active {
       border: 2px solid #40b3b7;
@@ -124,6 +143,10 @@
         max-height: 340px;
         overflow-y: scroll;
       }
+
+      input[type="text"] {
+        border-bottom: 1px solid rgba(34, 36, 38, 0.08);
+      }
     }
 
     * {
@@ -132,16 +155,29 @@
 
     input[type="text"] {
       font-size: 16px;
-      min-height: 42px;
+      min-height: 38px;
       width: 100%;
       display: block;
       border: none;
       padding-left: 15px;
       padding-right: 15px;
       outline: none;
-      border-bottom: 1px solid rgba(34, 36, 38, 0.08);
       font-family: Gotham Pro, sans-serif;
       font-weight: normal;
+    }
+  }
+
+
+  .text-input {
+    position: relative;
+    .progress {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8' standalone='no'%3F%3E%3Csvg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.0' width='16px' height='16px' viewBox='0 0 128 128' xml:space='preserve'%3E%3Cscript type='text/ecmascript' xlink:href='//preloaders.net/jscripts/smil.user.js'/%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='%23FFFFFF' /%3E%3Cg%3E%3ClinearGradient id='linear-gradient'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='100%25' stop-color='%23D8D8D8'/%3E%3C/linearGradient%3E%3Cpath d='M63.85 0A63.85 63.85 0 1 1 0 63.85 63.85 63.85 0 0 1 63.85 0zm.65 19.5a44 44 0 1 1-44 44 44 44 0 0 1 44-44z' fill='url(%23linear-gradient)' fill-rule='evenodd'/%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 64 64' to='360 64 64' dur='600ms' repeatCount='indefinite'%3E%3C/animateTransform%3E%3C/g%3E%3C/svg%3E");
     }
   }
 
@@ -191,6 +227,7 @@
             border-radius: 4px;
             border: 1px solid #bcbcbc;
             transition: background-color ease 150ms;
+            box-sizing: border-box;
           }
         }
         
@@ -214,8 +251,8 @@
         padding-bottom: 0;
         span {
           display: block;
-          padding-top: 15px;
-          padding-bottom: 15px;
+          padding-top: 12px;
+          padding-bottom: 12px;
           border-bottom: 1px solid rgba(34, 36, 38, 0.08);
         }
 
@@ -234,8 +271,8 @@
             }
             span {
               display: block;
-              padding-top: 15px;
-              padding-bottom: 15px;
+              padding-top: 12px;
+              padding-bottom: 12px;
               border-bottom: 1px solid rgba(34, 36, 38, 0.08);
             }
           }
