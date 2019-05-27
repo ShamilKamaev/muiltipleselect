@@ -55,6 +55,7 @@
     data() {
       return {
         changeIteration: 0,
+        queryIteration: 0,
         qstatus: false,
         contFocus: false,
         textFieldFocus: false,
@@ -74,7 +75,7 @@
       },
 
       branchesIds: {
-        type: Array,
+        // type: Array,
         required: false,
         // default() {
         //   return 15212;
@@ -133,7 +134,7 @@
 
     computed: {
       textSearchStatus() {
-        return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выбирите услуги'
+        return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выберите услуги'
       },
 
       selectedIds() {
@@ -330,6 +331,7 @@
               term: val
             },
           }).then(response => {
+            this.queryIteration++;
             response.data.results.forEach(elem => {
               elem.id = elem.id.toString();
               elem.checked = false;
@@ -347,6 +349,21 @@
               } else if(this.queryCache.length == 0) {
                 this.queryCache.push(elem);
               }
+
+              // обновляем данные в уже выбранных
+              if('children' in elem && this.queryIteration == 1) {
+                this.alreadySelected.forEach(queryCacheItem => {
+                  if(queryCacheItem.id.toString() == elem.id.toString()) {
+                    elem.children.forEach(childElem => {
+                      if(!this.selectedIds.some(idItem => idItem == childElem.id.toString())){
+                        queryCacheItem.children.push(childElem);
+                      }
+                    })
+                  }
+                })
+              }
+              
+              
             })
             this.searchStatus = true;
           }).catch(error => {
