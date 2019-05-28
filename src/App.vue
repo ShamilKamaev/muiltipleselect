@@ -1,21 +1,21 @@
 <template>
   <div id="m-select">
-    <component 
+    <!-- <component 
       :is="selectType" 
       :clinic-id="clinicId" 
       :branches-ids="branchesIds" 
       :api-url="apiUrl" 
       :already-selected="value" 
       @input="inputTrigger">
-    </component>
-    <!-- <component 
+    </component> -->
+    <component 
       :is="'select-checkbox'" 
       :clinic-id="5129" 
       :branches-ids="134467"
       :api-url="'http://spb.p.test.napopravku.ru/profile/load-smd-tree/'"
       :already-selected="test"
       @input="inputTrigger">
-    </component> -->
+    </component>
   </div>
 </template>
 
@@ -40,30 +40,30 @@
       }
     },
 
-    // data() {
-    //   return {
-    //     test: [
-    //       {
-    //         "id": '1919369',
-    //         "label": "УЗИ органов грудной клетки",
-    //         checked: false,
-    //         children: [
-    //             {"id": 852317, "label": "УЗИ легких и бронхов", checked: true},
-    //             // {"id": 541901, "label": "УЗИ плевральной полости", checked: true}
-    //         ]
-    //       },
-    //       {
-    //         "id": '1828735',
-    //         "label": "УЗИ суставов",
-    //         checked: false,
-    //         children: [
-    //             {"id": 546655, "label": "УЗИ коленного сустава (УЗИ колена)", checked: true},
-    //             {"id": 546654, "label": "УЗИ тазобедренного сустава", checked: true}
-    //         ]
-    //       }
-    //     ]
-    //   }
-    // },
+    data() {
+      return {
+        test: [
+          {
+            "id": '1919369',
+            "label": "УЗИ органов грудной клетки",
+            checked: true,
+            children: [
+                {"id": 852317, "label": "УЗИ легких и бронхов", checked: true},
+                // {"id": 541901, "label": "УЗИ плевральной полости", checked: true}
+            ]
+          },
+          {
+            "id": '1828735',
+            "label": "УЗИ суставов",
+            checked: false,
+            children: [
+                {"id": 546655, "label": "УЗИ коленного сустава (УЗИ колена)", checked: true},
+                {"id": 546654, "label": "УЗИ тазобедренного сустава", checked: true}
+            ]
+          }
+        ]
+      }
+    },
 
     watch: {
       value(val) {

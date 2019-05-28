@@ -304,14 +304,22 @@
       },
 
       removeService(service, index) {
-          this.selectedParents.splice(index, 1);
-          if(this.alreadySelected.length !== 0) {
-            for(var i = this.alreadySelected.length - 1; i >= 0; i--) {
-              if(parseInt(this.alreadySelected[i].id) == parseInt(service.id)) {
-                this.alreadySelected.splice(i, 1);
+        this.selectedParents.splice(index, 1);
+        if(this.alreadySelected.length !== 0) {
+          for(var i = this.alreadySelected.length - 1; i >= 0; i--) {
+            if(parseInt(this.alreadySelected[i].id) == parseInt(service.id)) {
+              this.alreadySelected.splice(i, 1);
+            }
+          }
+
+          if(!this.searchStatus) {
+            for(var i = this.queryCache.length - 1; i >= 0; i--) {
+              if(parseInt(this.queryCache[i].id) == parseInt(service.id)) {
+                this.queryCache.splice(i, 1);
               }
             }
           }
+        }
       }
     },
 
