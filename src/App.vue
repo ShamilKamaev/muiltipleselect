@@ -35,9 +35,7 @@
     },
 
     methods: {
-      inputTrigger(val) {
-        // console.log('hoy');
-        
+      inputTrigger(val) {        
         this.$emit('input', val);
       }
     },

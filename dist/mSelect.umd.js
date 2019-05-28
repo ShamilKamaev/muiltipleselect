@@ -3032,19 +3032,19 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=38fcd7e6&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=b6cba45e&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"m-select"}},[_c(_vm.selectType,{tag:"component",attrs:{"clinic-id":_vm.clinicId,"branches-ids":_vm.branchesIds,"api-url":_vm.apiUrl,"already-selected":_vm.value},on:{"input":_vm.inputTrigger}})],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=38fcd7e6&
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=b6cba45e&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-multiple.vue?vue&type=template&id=4529f19c&
-var select_multiplevue_type_template_id_4529f19c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('ul',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedServices.length !== 0),expression:"selectedServices.length !== 0"}],staticClass:"slected-services"},[_c('transition-group',{attrs:{"name":"fade-zoom"}},_vm._l((_vm.selectedServices),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "),_c('i',{on:{"click":function($event){return _vm.removeSelected(index)}}})])}),0)],1),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],ref:"tetxtInput",attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('ul',{staticClass:"services-list"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,on:{"click":function($event){return _vm.addService(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label)+" ")])],1)})],2)])}
-var select_multiplevue_type_template_id_4529f19c_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-multiple.vue?vue&type=template&id=35d81d19&
+var select_multiplevue_type_template_id_35d81d19_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('ul',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedServices.length !== 0),expression:"selectedServices.length !== 0"}],staticClass:"slected-services"},[_c('transition-group',{attrs:{"name":"fade-zoom"}},_vm._l((_vm.selectedServices),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "),_c('i',{on:{"click":function($event){return _vm.removeSelected(index)}}})])}),0)],1),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],ref:"tetxtInput",attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('ul',{staticClass:"services-list"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,on:{"click":function($event){return _vm.addService(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label)+" ")])],1)})],2)])}
+var select_multiplevue_type_template_id_35d81d19_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/multiselect-types/select-multiple.vue?vue&type=template&id=4529f19c&
+// CONCATENATED MODULE: ./src/components/multiselect-types/select-multiple.vue?vue&type=template&id=35d81d19&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.to-string.js
 var es6_regexp_to_string = __webpack_require__("6b54");
@@ -4407,7 +4407,7 @@ var TextHighlight = normalizeComponent_1({}, __vue_inject_styles__, __vue_script
   },
   computed: {
     textSearchStatus: function textSearchStatus() {
-      return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выбирите услуги';
+      return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выберите услуги';
     },
     selectedIds: function selectedIds() {
       var idsArr = [];
@@ -4613,8 +4613,8 @@ function componentNormalizer_normalizeComponent (
 
 var component = componentNormalizer_normalizeComponent(
   multiselect_types_select_multiplevue_type_script_lang_js_,
-  select_multiplevue_type_template_id_4529f19c_render,
-  select_multiplevue_type_template_id_4529f19c_staticRenderFns,
+  select_multiplevue_type_template_id_35d81d19_render,
+  select_multiplevue_type_template_id_35d81d19_staticRenderFns,
   false,
   null,
   null,
@@ -4623,12 +4623,12 @@ var component = componentNormalizer_normalizeComponent(
 )
 
 /* harmony default export */ var select_multiple = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=a2b53812&
-var select_checkboxvue_type_template_id_a2b53812_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('transition-group',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedParents.length !== 0),expression:"selectedParents.length !== 0"}],staticClass:"slected-services",attrs:{"name":"fade-zoom","tag":"ul"}},_vm._l((_vm.selectedParents),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "+_vm._s(service.checkedStatus)),_c('i',{on:{"click":function($event){return _vm.removeService(index)}}})])}),0),_c('div',{staticClass:"text-input"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}})]),_c('ul',{staticClass:"services-list services-list_checboxes"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,class:{'is-checked': service.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label))])],1),_c('ul',_vm._l((service.children),function(childService){return _c('li',{key:childService.id,class:{'is-checked': childService.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(childService)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(childService.label))])],1)])}),0)])})],2)],1)}
-var select_checkboxvue_type_template_id_a2b53812_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=d3fa4fa4&
+var select_checkboxvue_type_template_id_d3fa4fa4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus && _vm.searchStatus},on:{"click":_vm.handleFocus}},[_c('transition-group',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedParents.length !== 0),expression:"selectedParents.length !== 0"}],staticClass:"slected-services",attrs:{"name":"fade-zoom","tag":"ul"}},_vm._l((_vm.selectedParents),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "+_vm._s(service.checkedStatus)),_c('i',{on:{"click":function($event){return _vm.removeService(service, index)}}})])}),0),_c('div',{staticClass:"text-input"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.searchString.length >= 3 && _vm.searchStatus == false),expression:"searchString.length >= 3 && searchStatus == false"}],staticClass:"progress"})]),_c('ul',{staticClass:"services-list services-list_checboxes"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,class:{'is-checked': service.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label))])],1),_c('ul',_vm._l((service.children),function(childService){return _c('li',{key:childService.id,class:{'is-checked': childService.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(childService)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(childService.label))])],1)])}),0)])})],2)],1)}
+var select_checkboxvue_type_template_id_d3fa4fa4_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=a2b53812&
+// CONCATENATED MODULE: ./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=d3fa4fa4&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=script&lang=js&
 
@@ -4867,70 +4867,80 @@ var select_checkboxvue_type_template_id_a2b53812_staticRenderFns = []
     addParent: function addParent(service) {
       var _this4 = this;
 
-      // добавлеие через ребенка
-      if (service.parent == false && service.checked == false) {
-        if (!this.selectedParentsIds.some(function (item) {
-          return item.toString() == service.parentId.toString();
-        })) {
-          this.filtredServices.forEach(function (filtredItem) {
-            if (filtredItem.id.toString() == service.parentId.toString()) {
-              service.checked = true;
+      if (this.searchStatus) {
+        // добавлеие через ребенка
+        if (service.parent == false && service.checked == false) {
+          if (!this.selectedParentsIds.some(function (item) {
+            return item.toString() == service.parentId.toString();
+          })) {
+            this.filtredServices.forEach(function (filtredItem) {
+              if (filtredItem.id.toString() == service.parentId.toString()) {
+                service.checked = true;
 
-              _this4.selectedParents.push(filtredItem);
-            }
-          });
-        } else {
-          service.checked = true;
-        }
-      } // удаление через ребенка
-      else if (service.parent == false && service.checked == true) {
-          service.checked = false;
-          this.selectedParents.forEach(function (selecteParentItem, index) {
-            if (selecteParentItem.id.toString() == service.parentId.toString() && selecteParentItem.checked == false && selecteParentItem.children.every(function (item) {
-              return item.checked == false;
-            })) {
-              _this4.selectedParents.splice(index, 1);
-            }
-          });
-        } // добавление одиночного елемента
-        else if (service.parent == true && service.checked == false && !('children' in service)) {
+                _this4.selectedParents.push(filtredItem);
+              }
+            });
+          } else {
             service.checked = true;
-            this.selectedParents.push(service);
-          } // удаление одиночного елемента
-          else if (service.parent == true && service.checked == true && !('children' in service)) {
-              this.selectedParents.forEach(function (selecteParentItem, index) {
-                if (selecteParentItem.id.toString() == service.id.toString()) {
-                  _this4.selectedParents.splice(index, 1);
-                }
-              });
-              service.checked = false;
-            } // добавление через родителя
-            else if (service.parent == true && service.checked == false) {
-                if ('children' in service && !this.selectedParentsIds.some(function (item) {
-                  return item.toString() == service.id.toString();
-                })) {
-                  service.children.forEach(function (item) {
-                    item.checked = true;
-                  });
-                  service.checked = true;
-                  this.selectedParents.push(service);
-                } else {
-                  service.checked = true;
-                }
-              } // удаление через родителя
-              else if (service.parent == true && 'children' in service && service.checked == true) {
-                  service.checked = false;
-                  this.selectedParents.forEach(function (selecteParentItem, index) {
-                    if (selecteParentItem.id.toString() == service.id.toString() && selecteParentItem.checked == false && selecteParentItem.children.every(function (item) {
-                      return item.checked == false;
-                    })) {
-                      _this4.selectedParents.splice(index, 1);
-                    }
-                  });
-                }
+          }
+        } // удаление через ребенка
+        else if (service.parent == false && service.checked == true) {
+            service.checked = false;
+            this.selectedParents.forEach(function (selecteParentItem, index) {
+              if (selecteParentItem.id.toString() == service.parentId.toString() && selecteParentItem.checked == false && selecteParentItem.children.every(function (item) {
+                return item.checked == false;
+              })) {
+                _this4.selectedParents.splice(index, 1);
+              }
+            });
+          } // добавление одиночного елемента
+          else if (service.parent == true && service.checked == false && !('children' in service)) {
+              service.checked = true;
+              this.selectedParents.push(service);
+            } // удаление одиночного елемента
+            else if (service.parent == true && service.checked == true && !('children' in service)) {
+                this.selectedParents.forEach(function (selecteParentItem, index) {
+                  if (selecteParentItem.id.toString() == service.id.toString()) {
+                    _this4.selectedParents.splice(index, 1);
+                  }
+                });
+                service.checked = false;
+              } // добавление через родителя
+              else if (service.parent == true && service.checked == false) {
+                  if ('children' in service && !this.selectedParentsIds.some(function (item) {
+                    return item.toString() == service.id.toString();
+                  })) {
+                    service.children.forEach(function (item) {
+                      item.checked = true;
+                    });
+                    service.checked = true;
+                    this.selectedParents.push(service);
+                  } else {
+                    service.checked = true;
+                  }
+                } // удаление через родителя
+                else if (service.parent == true && 'children' in service && service.checked == true) {
+                    service.checked = false;
+                    this.selectedParents.forEach(function (selecteParentItem, index) {
+                      if (selecteParentItem.id.toString() == service.id.toString() && selecteParentItem.checked == false && selecteParentItem.children.every(function (item) {
+                        return item.checked == false;
+                      })) {
+                        _this4.selectedParents.splice(index, 1);
+                      }
+                    });
+                  }
+      }
     },
-    removeService: function removeService(index) {
+    removeService: function removeService(service, index) {
       this.selectedParents.splice(index, 1);
+
+      if (this.alreadySelected.length !== 0) {
+        for (var i = this.alreadySelected.length - 1; i >= 0; i--) {
+          if (parseInt(this.alreadySelected[i].id) == parseInt(service.id)) {
+            this.alreadySelected.splice(i, 1);
+          }
+        }
+      }
     }
   },
   watch: {
@@ -4985,12 +4995,13 @@ var select_checkboxvue_type_template_id_a2b53812_staticRenderFns = []
 
 
             if ('children' in elem && _this5.queryIteration == 1) {
-              _this5.alreadySelected.forEach(function (queryCacheItem) {
+              _this5.queryCache.forEach(function (queryCacheItem) {
                 if (queryCacheItem.id.toString() == elem.id.toString()) {
                   elem.children.forEach(function (childElem) {
                     if (!_this5.selectedIds.some(function (idItem) {
                       return idItem == childElem.id.toString();
                     })) {
+                      childElem.checked = false;
                       queryCacheItem.children.push(childElem);
                     }
                   });
@@ -5018,8 +5029,8 @@ var select_checkboxvue_type_template_id_a2b53812_staticRenderFns = []
 
 var select_checkbox_component = componentNormalizer_normalizeComponent(
   multiselect_types_select_checkboxvue_type_script_lang_js_,
-  select_checkboxvue_type_template_id_a2b53812_render,
-  select_checkboxvue_type_template_id_a2b53812_staticRenderFns,
+  select_checkboxvue_type_template_id_d3fa4fa4_render,
+  select_checkboxvue_type_template_id_d3fa4fa4_staticRenderFns,
   false,
   null,
   null,
@@ -5028,12 +5039,12 @@ var select_checkbox_component = componentNormalizer_normalizeComponent(
 )
 
 /* harmony default export */ var select_checkbox = (select_checkbox_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-single.vue?vue&type=template&id=68cd30de&
-var select_singlevue_type_template_id_68cd30de_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],ref:"tetxtInput",attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('ul',{staticClass:"services-list"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,on:{"click":function($event){return _vm.addService(service)}}},[_vm._v(_vm._s(service.label))])})],2)])}
-var select_singlevue_type_template_id_68cd30de_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-single.vue?vue&type=template&id=32bc7501&
+var select_singlevue_type_template_id_32bc7501_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],ref:"tetxtInput",attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('ul',{staticClass:"services-list"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,on:{"click":function($event){return _vm.addService(service)}}},[_vm._v(_vm._s(service.label))])})],2)])}
+var select_singlevue_type_template_id_32bc7501_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/multiselect-types/select-single.vue?vue&type=template&id=68cd30de&
+// CONCATENATED MODULE: ./src/components/multiselect-types/select-single.vue?vue&type=template&id=32bc7501&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-single.vue?vue&type=script&lang=js&
 
@@ -5105,7 +5116,7 @@ var select_singlevue_type_template_id_68cd30de_staticRenderFns = []
       if (this.selectedServices.length != 0) {
         return this.textFieldFocus ? 'Начните вводить название услуги' : this.selectedServices[0].label;
       } else {
-        return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выбирите услуги';
+        return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выберите услуги';
       }
     },
     selectedIds: function selectedIds() {
@@ -5178,8 +5189,8 @@ var select_singlevue_type_template_id_68cd30de_staticRenderFns = []
 
 var select_single_component = componentNormalizer_normalizeComponent(
   multiselect_types_select_singlevue_type_script_lang_js_,
-  select_singlevue_type_template_id_68cd30de_render,
-  select_singlevue_type_template_id_68cd30de_staticRenderFns,
+  select_singlevue_type_template_id_32bc7501_render,
+  select_singlevue_type_template_id_32bc7501_staticRenderFns,
   false,
   null,
   null,
@@ -5222,7 +5233,6 @@ var select_single_component = componentNormalizer_normalizeComponent(
   },
   methods: {
     inputTrigger: function inputTrigger(val) {
-      // console.log('hoy');
       this.$emit('input', val);
     }
   },
@@ -5232,7 +5242,7 @@ var select_single_component = componentNormalizer_normalizeComponent(
   //       {
   //         "id": '1919369',
   //         "label": "УЗИ органов грудной клетки",
-  //         checked: true,
+  //         checked: false,
   //         children: [
   //             {"id": 852317, "label": "УЗИ легких и бронхов", checked: true},
   //             // {"id": 541901, "label": "УЗИ плевральной полости", checked: true}
@@ -5252,6 +5262,7 @@ var select_single_component = componentNormalizer_normalizeComponent(
   // },
   watch: {
     value: function value(val) {
+      console.log('hoy');
       this.$emit('input', val);
     }
   },
