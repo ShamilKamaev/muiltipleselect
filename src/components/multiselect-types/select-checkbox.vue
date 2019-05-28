@@ -362,7 +362,7 @@
 
               // обновляем данные в уже выбранных
               if('children' in elem && this.queryIteration == 1) {
-                this.queryCache.forEach(queryCacheItem => {
+                this.alreadySelected.forEach(queryCacheItem => {
                   if(queryCacheItem.id.toString() == elem.id.toString()) {
                     elem.children.forEach(childElem => {
                       if(!this.selectedIds.some(idItem => idItem == childElem.id.toString())){
