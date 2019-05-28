@@ -76,7 +76,7 @@
 
     computed: {
       textSearchStatus() {
-        return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выбирите услуги'
+        return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выберите услуги'
       },
 
 
@@ -156,8 +156,6 @@
           })
         }
       })
-
-      
     },
 
     methods: {

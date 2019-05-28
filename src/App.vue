@@ -48,7 +48,7 @@
     //       {
     //         "id": '1919369',
     //         "label": "УЗИ органов грудной клетки",
-    //         checked: true,
+    //         checked: false,
     //         children: [
     //             {"id": 852317, "label": "УЗИ легких и бронхов", checked: true},
     //             // {"id": 541901, "label": "УЗИ плевральной полости", checked: true}
@@ -69,6 +69,8 @@
 
     watch: {
       value(val) {
+        console.log('hoy');
+        
         this.$emit('input', val);
       }
     },

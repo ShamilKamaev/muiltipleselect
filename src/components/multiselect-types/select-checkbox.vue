@@ -1,11 +1,11 @@
   <template>
     <div class="multi-select__container" 
-        :class="{'is-active': contFocus}"
+        :class="{'is-active': contFocus && searchStatus}"
         v-on-clickaway="handleFocusOut"
         @click="handleFocus"
         >
       <transition-group name="fade-zoom" tag="ul" class="slected-services" v-show="selectedParents.length !== 0">
-        <li v-for="(service, index) in selectedParents" :key="service.id">{{ service.label }} {{ service.checkedStatus }}<i @click="removeService(index)"></i></li>
+        <li v-for="(service, index) in selectedParents" :key="service.id">{{ service.label }} {{ service.checkedStatus }}<i @click="removeService(service, index)"></i></li>
       </transition-group>
       <div class="text-input">
         <input 
@@ -14,7 +14,7 @@
           :placeholder="textSearchStatus"
           @focus="textFieldFocus = true"
           @blur="textFieldFocus = false">
-          <!-- <span class="progress"></span> -->
+          <span v-show="searchString.length >= 3 && searchStatus == false" class="progress"></span>
       </div>
       <ul class="services-list services-list_checboxes">
         <li class="not-found" v-if="searchStatus && searchString.length > 2 && filtredServices.length == 0">Совпадений не найдено</li>
@@ -240,7 +240,8 @@
       },
 
       addParent(service) {
-        // добавлеие через ребенка
+        if(this.searchStatus) {
+          // добавлеие через ребенка
         if(service.parent == false && service.checked == false) {
           if(!this.selectedParentsIds.some(item => item.toString() == service.parentId.toString())) {
             this.filtredServices.forEach(filtredItem => {
@@ -298,10 +299,19 @@
             }
           })
         }
+        }
+        
       },
 
-      removeService(index) {
-        this.selectedParents.splice(index, 1);
+      removeService(service, index) {
+          this.selectedParents.splice(index, 1);
+          if(this.alreadySelected.length !== 0) {
+            for(var i = this.alreadySelected.length - 1; i >= 0; i--) {
+              if(parseInt(this.alreadySelected[i].id) == parseInt(service.id)) {
+                this.alreadySelected.splice(i, 1);
+              }
+            }
+          }
       }
     },
 
@@ -352,10 +362,11 @@
 
               // обновляем данные в уже выбранных
               if('children' in elem && this.queryIteration == 1) {
-                this.alreadySelected.forEach(queryCacheItem => {
+                this.queryCache.forEach(queryCacheItem => {
                   if(queryCacheItem.id.toString() == elem.id.toString()) {
                     elem.children.forEach(childElem => {
                       if(!this.selectedIds.some(idItem => idItem == childElem.id.toString())){
+                        childElem.checked = false;
                         queryCacheItem.children.push(childElem);
                       }
                     })

@@ -73,7 +73,7 @@
         if(this.selectedServices.length != 0) {
           return this.textFieldFocus ? 'Начните вводить название услуги' : this.selectedServices[0].label
         } else {
-          return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выбирите услуги'
+          return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выберите услуги'
         }
       },
 
