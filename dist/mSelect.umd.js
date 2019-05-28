@@ -3032,12 +3032,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=b6cba45e&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"m-select"}},[_c(_vm.selectType,{tag:"component",attrs:{"clinic-id":_vm.clinicId,"branches-ids":_vm.branchesIds,"api-url":_vm.apiUrl,"already-selected":_vm.value},on:{"input":_vm.inputTrigger}})],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=2ef75cb4&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"m-select"}},[_c('select-checkbox',{tag:"component",attrs:{"clinic-id":5129,"branches-ids":134467,"api-url":'http://spb.p.test.napopravku.ru/profile/load-smd-tree/',"already-selected":_vm.test},on:{"input":_vm.inputTrigger}})],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=b6cba45e&
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=2ef75cb4&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-multiple.vue?vue&type=template&id=35d81d19&
 var select_multiplevue_type_template_id_35d81d19_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('ul',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedServices.length !== 0),expression:"selectedServices.length !== 0"}],staticClass:"slected-services"},[_c('transition-group',{attrs:{"name":"fade-zoom"}},_vm._l((_vm.selectedServices),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "),_c('i',{on:{"click":function($event){return _vm.removeSelected(index)}}})])}),0)],1),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],ref:"tetxtInput",attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('ul',{staticClass:"services-list"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,on:{"click":function($event){return _vm.addService(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label)+" ")])],1)})],2)])}
@@ -4623,12 +4623,12 @@ var component = componentNormalizer_normalizeComponent(
 )
 
 /* harmony default export */ var select_multiple = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=ff7aba5e&
-var select_checkboxvue_type_template_id_ff7aba5e_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus && _vm.searchStatus},on:{"click":_vm.handleFocus}},[_c('transition-group',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedParents.length !== 0),expression:"selectedParents.length !== 0"}],staticClass:"slected-services",attrs:{"name":"fade-zoom","tag":"ul"}},_vm._l((_vm.selectedParents),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "+_vm._s(service.checkedStatus)),_c('i',{on:{"click":function($event){return _vm.removeService(service, index)}}})])}),0),_c('div',{staticClass:"text-input"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.searchString.length >= 3 && _vm.searchStatus == false),expression:"searchString.length >= 3 && searchStatus == false"}],staticClass:"progress"})]),_c('ul',{staticClass:"services-list services-list_checboxes"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,class:{'is-checked': service.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label))])],1),_c('ul',_vm._l((service.children),function(childService){return _c('li',{key:childService.id,class:{'is-checked': childService.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(childService)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(childService.label))])],1)])}),0)])})],2)],1)}
-var select_checkboxvue_type_template_id_ff7aba5e_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=fc733b48&
+var select_checkboxvue_type_template_id_fc733b48_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus && _vm.searchStatus},on:{"click":_vm.handleFocus}},[_c('transition-group',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedParents.length !== 0),expression:"selectedParents.length !== 0"}],staticClass:"slected-services",attrs:{"name":"fade-zoom","tag":"ul"}},_vm._l((_vm.selectedParents),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "+_vm._s(service.checkedStatus)),_c('i',{on:{"click":function($event){return _vm.removeService(service, index)}}})])}),0),_c('div',{staticClass:"text-input"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.searchString.length >= 3 && _vm.searchStatus == false),expression:"searchString.length >= 3 && searchStatus == false"}],staticClass:"progress"})]),_c('ul',{staticClass:"services-list services-list_checboxes"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,class:{'is-checked': service.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label))])],1),_c('ul',_vm._l((service.children),function(childService){return _c('li',{key:childService.id,class:{'is-checked': childService.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(childService)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(childService.label))])],1)])}),0)])})],2)],1)}
+var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=ff7aba5e&
+// CONCATENATED MODULE: ./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=fc733b48&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=script&lang=js&
 
@@ -4940,6 +4940,14 @@ var select_checkboxvue_type_template_id_ff7aba5e_staticRenderFns = []
             this.alreadySelected.splice(i, 1);
           }
         }
+
+        if (!this.searchStatus) {
+          for (var i = this.queryCache.length - 1; i >= 0; i--) {
+            if (parseInt(this.queryCache[i].id) == parseInt(service.id)) {
+              this.queryCache.splice(i, 1);
+            }
+          }
+        }
       }
     }
   },
@@ -5029,8 +5037,8 @@ var select_checkboxvue_type_template_id_ff7aba5e_staticRenderFns = []
 
 var select_checkbox_component = componentNormalizer_normalizeComponent(
   multiselect_types_select_checkboxvue_type_script_lang_js_,
-  select_checkboxvue_type_template_id_ff7aba5e_render,
-  select_checkboxvue_type_template_id_ff7aba5e_staticRenderFns,
+  select_checkboxvue_type_template_id_fc733b48_render,
+  select_checkboxvue_type_template_id_fc733b48_staticRenderFns,
   false,
   null,
   null,
@@ -5236,30 +5244,33 @@ var select_single_component = componentNormalizer_normalizeComponent(
       this.$emit('input', val);
     }
   },
-  // data() {
-  //   return {
-  //     test: [
-  //       {
-  //         "id": '1919369',
-  //         "label": "УЗИ органов грудной клетки",
-  //         checked: false,
-  //         children: [
-  //             {"id": 852317, "label": "УЗИ легких и бронхов", checked: true},
-  //             // {"id": 541901, "label": "УЗИ плевральной полости", checked: true}
-  //         ]
-  //       },
-  //       {
-  //         "id": '1828735',
-  //         "label": "УЗИ суставов",
-  //         checked: false,
-  //         children: [
-  //             {"id": 546655, "label": "УЗИ коленного сустава (УЗИ колена)", checked: true},
-  //             {"id": 546654, "label": "УЗИ тазобедренного сустава", checked: true}
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // },
+  data: function data() {
+    return {
+      test: [{
+        "id": '1919369',
+        "label": "УЗИ органов грудной клетки",
+        checked: true,
+        children: [{
+          "id": 852317,
+          "label": "УЗИ легких и бронхов",
+          checked: true
+        }]
+      }, {
+        "id": '1828735',
+        "label": "УЗИ суставов",
+        checked: false,
+        children: [{
+          "id": 546655,
+          "label": "УЗИ коленного сустава (УЗИ колена)",
+          checked: true
+        }, {
+          "id": 546654,
+          "label": "УЗИ тазобедренного сустава",
+          checked: true
+        }]
+      }]
+    };
+  },
   watch: {
     value: function value(val) {
       console.log('hoy');
