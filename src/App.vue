@@ -2,6 +2,7 @@
   <div id="m-select">
     <component 
       :is="selectType" 
+      :async="async"
       :symbols-limit="symbolsLimit"
       :placeholder="placeholder" 
       :second-placeholder="secondPlaceholder"
