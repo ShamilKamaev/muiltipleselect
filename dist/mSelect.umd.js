@@ -288,27 +288,6 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ "0bfb":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// 21.2.5.3 get RegExp.prototype.flags
-var anObject = __webpack_require__("cb7c");
-module.exports = function () {
-  var that = anObject(this);
-  var result = '';
-  if (that.global) result += 'g';
-  if (that.ignoreCase) result += 'i';
-  if (that.multiline) result += 'm';
-  if (that.unicode) result += 'u';
-  if (that.sticky) result += 'y';
-  return result;
-};
-
-
-/***/ }),
-
 /***/ "0d58":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -353,6 +332,29 @@ module.exports = function spread(callback) {
   return function wrap(arr) {
     return callback.apply(null, arr);
   };
+};
+
+
+/***/ }),
+
+/***/ "11e9":
+/***/ (function(module, exports, __webpack_require__) {
+
+var pIE = __webpack_require__("52a7");
+var createDesc = __webpack_require__("4630");
+var toIObject = __webpack_require__("6821");
+var toPrimitive = __webpack_require__("6a99");
+var has = __webpack_require__("69a8");
+var IE8_DOM_DEFINE = __webpack_require__("c69a");
+var gOPD = Object.getOwnPropertyDescriptor;
+
+exports.f = __webpack_require__("9e1e") ? gOPD : function getOwnPropertyDescriptor(O, P) {
+  O = toIObject(O);
+  P = toPrimitive(P, true);
+  if (IE8_DOM_DEFINE) try {
+    return gOPD(O, P);
+  } catch (e) { /* empty */ }
+  if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
 };
 
 
@@ -768,18 +770,6 @@ module.exports = __webpack_require__("9e1e") ? function (object, key, value) {
 
 /***/ }),
 
-/***/ "3846":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 21.2.5.3 get RegExp.prototype.flags()
-if (__webpack_require__("9e1e") && /./g.flags != 'g') __webpack_require__("86cc").f(RegExp.prototype, 'flags', {
-  configurable: true,
-  get: __webpack_require__("0bfb")
-});
-
-
-/***/ }),
-
 /***/ "387f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1094,6 +1084,14 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
+/***/ "52a7":
+/***/ (function(module, exports) {
+
+exports.f = {}.propertyIsEnumerable;
+
+
+/***/ }),
+
 /***/ "5537":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1174,6 +1172,22 @@ module.exports = $export;
 
 /***/ }),
 
+/***/ "5dbc":
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__("d3f4");
+var setPrototypeOf = __webpack_require__("8b97").set;
+module.exports = function (that, target, C) {
+  var S = target.constructor;
+  var P;
+  if (S !== C && typeof S == 'function' && (P = S.prototype) !== C.prototype && isObject(P) && setPrototypeOf) {
+    setPrototypeOf(that, P);
+  } return that;
+};
+
+
+/***/ }),
+
 /***/ "5e27":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1245,39 +1259,6 @@ module.exports = function (it, S) {
   if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
   throw TypeError("Can't convert object to primitive value");
 };
-
-
-/***/ }),
-
-/***/ "6b54":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-__webpack_require__("3846");
-var anObject = __webpack_require__("cb7c");
-var $flags = __webpack_require__("0bfb");
-var DESCRIPTORS = __webpack_require__("9e1e");
-var TO_STRING = 'toString';
-var $toString = /./[TO_STRING];
-
-var define = function (fn) {
-  __webpack_require__("2aba")(RegExp.prototype, TO_STRING, fn, true);
-};
-
-// 21.2.5.14 RegExp.prototype.toString()
-if (__webpack_require__("79e5")(function () { return $toString.call({ source: 'a', flags: 'b' }) != '/a/b'; })) {
-  define(function toString() {
-    var R = anObject(this);
-    return '/'.concat(R.source, '/',
-      'flags' in R ? R.flags : !DESCRIPTORS && R instanceof RegExp ? $flags.call(R) : undefined);
-  });
-// FF44- RegExp#toString has a wrong name
-} else if ($toString.name != TO_STRING) {
-  define(function toString() {
-    return $toString.call(this);
-  });
-}
 
 
 /***/ }),
@@ -1465,6 +1446,38 @@ exports.f = __webpack_require__("9e1e") ? Object.defineProperty : function defin
 
 /***/ }),
 
+/***/ "8b97":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+/* eslint-disable no-proto */
+var isObject = __webpack_require__("d3f4");
+var anObject = __webpack_require__("cb7c");
+var check = function (O, proto) {
+  anObject(O);
+  if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
+};
+module.exports = {
+  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
+    function (test, buggy, set) {
+      try {
+        set = __webpack_require__("9b43")(Function.call, __webpack_require__("11e9").f(Object.prototype, '__proto__').set, 2);
+        set(test, []);
+        buggy = !(test instanceof Array);
+      } catch (e) { buggy = true; }
+      return function setPrototypeOf(O, proto) {
+        check(O, proto);
+        if (buggy) O.__proto__ = proto;
+        else set(O, proto);
+        return O;
+      };
+    }({}, false) : undefined),
+  check: check
+};
+
+
+/***/ }),
+
 /***/ "8bbf":
 /***/ (function(module, exports) {
 
@@ -1533,6 +1546,20 @@ CancelToken.source = function source() {
 };
 
 module.exports = CancelToken;
+
+
+/***/ }),
+
+/***/ "9093":
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
+var $keys = __webpack_require__("ce10");
+var hiddenKeys = __webpack_require__("e11e").concat('length', 'prototype');
+
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return $keys(O, hiddenKeys);
+};
 
 
 /***/ }),
@@ -1642,6 +1669,43 @@ function btoa(input) {
 }
 
 module.exports = btoa;
+
+
+/***/ }),
+
+/***/ "aa77":
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__("5ca1");
+var defined = __webpack_require__("be13");
+var fails = __webpack_require__("79e5");
+var spaces = __webpack_require__("fdef");
+var space = '[' + spaces + ']';
+var non = '\u200b\u0085';
+var ltrim = RegExp('^' + space + space + '*');
+var rtrim = RegExp(space + space + '*$');
+
+var exporter = function (KEY, exec, ALIAS) {
+  var exp = {};
+  var FORCE = fails(function () {
+    return !!spaces[KEY]() || non[KEY]() != non;
+  });
+  var fn = exp[KEY] = FORCE ? exec(trim) : spaces[KEY];
+  if (ALIAS) exp[ALIAS] = fn;
+  $export($export.P + $export.F * FORCE, 'String', exp);
+};
+
+// 1 -> String#trimLeft
+// 2 -> String#trimRight
+// 3 -> String#trim
+var trim = exporter.trim = function (string, TYPE) {
+  string = String(defined(string));
+  if (TYPE & 1) string = string.replace(ltrim, '');
+  if (TYPE & 2) string = string.replace(rtrim, '');
+  return string;
+};
+
+module.exports = exporter;
 
 
 /***/ }),
@@ -2348,6 +2412,83 @@ module.exports = {
 
 /***/ }),
 
+/***/ "c5f6":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__("7726");
+var has = __webpack_require__("69a8");
+var cof = __webpack_require__("2d95");
+var inheritIfRequired = __webpack_require__("5dbc");
+var toPrimitive = __webpack_require__("6a99");
+var fails = __webpack_require__("79e5");
+var gOPN = __webpack_require__("9093").f;
+var gOPD = __webpack_require__("11e9").f;
+var dP = __webpack_require__("86cc").f;
+var $trim = __webpack_require__("aa77").trim;
+var NUMBER = 'Number';
+var $Number = global[NUMBER];
+var Base = $Number;
+var proto = $Number.prototype;
+// Opera ~12 has broken Object#toString
+var BROKEN_COF = cof(__webpack_require__("2aeb")(proto)) == NUMBER;
+var TRIM = 'trim' in String.prototype;
+
+// 7.1.3 ToNumber(argument)
+var toNumber = function (argument) {
+  var it = toPrimitive(argument, false);
+  if (typeof it == 'string' && it.length > 2) {
+    it = TRIM ? it.trim() : $trim(it, 3);
+    var first = it.charCodeAt(0);
+    var third, radix, maxCode;
+    if (first === 43 || first === 45) {
+      third = it.charCodeAt(2);
+      if (third === 88 || third === 120) return NaN; // Number('+0x1') should be NaN, old V8 fix
+    } else if (first === 48) {
+      switch (it.charCodeAt(1)) {
+        case 66: case 98: radix = 2; maxCode = 49; break; // fast equal /^0b[01]+$/i
+        case 79: case 111: radix = 8; maxCode = 55; break; // fast equal /^0o[0-7]+$/i
+        default: return +it;
+      }
+      for (var digits = it.slice(2), i = 0, l = digits.length, code; i < l; i++) {
+        code = digits.charCodeAt(i);
+        // parseInt parses a string to a first unavailable symbol
+        // but ToNumber should return NaN if a string contains unavailable symbols
+        if (code < 48 || code > maxCode) return NaN;
+      } return parseInt(digits, radix);
+    }
+  } return +it;
+};
+
+if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
+  $Number = function Number(value) {
+    var it = arguments.length < 1 ? 0 : value;
+    var that = this;
+    return that instanceof $Number
+      // check on 1..constructor(foo) case
+      && (BROKEN_COF ? fails(function () { proto.valueOf.call(that); }) : cof(that) != NUMBER)
+        ? inheritIfRequired(new Base(toNumber(it)), that, $Number) : toNumber(it);
+  };
+  for (var keys = __webpack_require__("9e1e") ? gOPN(Base) : (
+    // ES3:
+    'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
+    // ES6 (in case, if modules with ES6 Number statics required before):
+    'EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,' +
+    'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger'
+  ).split(','), j = 0, key; keys.length > j; j++) {
+    if (has(Base, key = keys[j]) && !has($Number, key)) {
+      dP($Number, key, gOPD(Base, key));
+    }
+  }
+  $Number.prototype = proto;
+  proto.constructor = $Number;
+  __webpack_require__("2aba")(global, NUMBER, $Number);
+}
+
+
+/***/ }),
+
 /***/ "c69a":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3032,22 +3173,22 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=b74ab804&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"m-select"}},[_c(_vm.selectType,{tag:"component",attrs:{"clinic-id":_vm.clinicId,"branches-ids":_vm.branchesIds,"api-url":_vm.apiUrl,"already-selected":_vm.value},on:{"input":_vm.inputTrigger}})],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=4d78ecc8&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"m-select"}},[_c(_vm.selectType,{tag:"component",attrs:{"symbols-limit":_vm.symbolsLimit,"placeholder":_vm.placeholder,"second-placeholder":_vm.secondPlaceholder,"text-box":_vm.textBox,"already-selected":_vm.value},on:{"input":_vm.inputTrigger,"querySettingsEmit":_vm.setLoadSettings}})],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=b74ab804&
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=4d78ecc8&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-multiple.vue?vue&type=template&id=35d81d19&
-var select_multiplevue_type_template_id_35d81d19_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('ul',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedServices.length !== 0),expression:"selectedServices.length !== 0"}],staticClass:"slected-services"},[_c('transition-group',{attrs:{"name":"fade-zoom"}},_vm._l((_vm.selectedServices),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "),_c('i',{on:{"click":function($event){return _vm.removeSelected(index)}}})])}),0)],1),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],ref:"tetxtInput",attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('ul',{staticClass:"services-list"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,on:{"click":function($event){return _vm.addService(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label)+" ")])],1)})],2)])}
-var select_multiplevue_type_template_id_35d81d19_staticRenderFns = []
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
+var es6_number_constructor = __webpack_require__("c5f6");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-multiple.vue?vue&type=template&id=629ca85b&
+var select_multiplevue_type_template_id_629ca85b_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('ul',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedOptions.length !== 0),expression:"selectedOptions.length !== 0"}],staticClass:"slected-services"},[_c('transition-group',{attrs:{"name":"fade-zoom"}},_vm._l((_vm.selectedOptions),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "),_c('i',{on:{"click":function($event){return _vm.removeSelected(index)}}})])}),0)],1),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],ref:"tetxtInput",attrs:{"type":"text","readonly":!_vm.textBox,"placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('ul',{staticClass:"services-list"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredOptions.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredOptions),function(service){return _c('li',{key:service.id,on:{"click":function($event){return _vm.addService(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label)+" ")])],1)})],2)])}
+var select_multiplevue_type_template_id_629ca85b_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/multiselect-types/select-multiple.vue?vue&type=template&id=35d81d19&
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.to-string.js
-var es6_regexp_to_string = __webpack_require__("6b54");
+// CONCATENATED MODULE: ./src/components/multiselect-types/select-multiple.vue?vue&type=template&id=629ca85b&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
@@ -4361,6 +4502,7 @@ var TextHighlight = normalizeComponent_1({}, __vue_inject_styles__, __vue_script
 //
 //
 //
+//
 
 
 
@@ -4376,118 +4518,133 @@ var TextHighlight = normalizeComponent_1({}, __vue_inject_styles__, __vue_script
       textFieldFocus: false,
       searchStatus: false,
       searchString: '',
-      loadedServices: [],
-      selectedServices: []
+      loadedOptions: [],
+      selectedOptions: [],
+      changeIteration: 0
     };
   },
   props: {
+    symbolsLimit: {
+      type: Number,
+      required: false,
+      default: 3
+    },
+    placeholder: {
+      type: String,
+      required: true
+    },
+    secondPlaceholder: {
+      type: String,
+      required: true
+    },
+    async: {
+      type: Boolean,
+      required: true
+    },
+    loadingOptions: {
+      type: Function,
+      required: false
+    },
+    textBox: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
     alreadySelected: {
       type: Array,
       default: function _default() {
         return [];
       }
-    },
-    branchesIds: {
-      type: Array,
-      required: false
-    },
-    clinicId: {
-      required: false,
-      default: function _default() {
-        return 15212;
-      }
-    },
-    apiUrl: {
-      type: String,
-      required: false,
-      default: function _default() {
-        return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
-      }
     }
   },
   computed: {
+    querySettings: function querySettings() {
+      var _this = this;
+
+      return {
+        async: this.async,
+        searchString: this.searchString,
+        callback: function callback(options) {
+          _this.loadedOptions = options;
+          _this.searchStatus = true;
+        }
+      };
+    },
     textSearchStatus: function textSearchStatus() {
       return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выберите услуги';
     },
     selectedIds: function selectedIds() {
       var idsArr = [];
-      this.selectedServices.forEach(function (item) {
-        idsArr.push(item.id.toString());
+      this.selectedOptions.forEach(function (item) {
+        idsArr.push(item.id);
       });
       return idsArr;
     },
-    filtredServices: function filtredServices() {
-      var _this = this;
+    buildedOptions: function buildedOptions() {
+      var buildedArr = [];
 
-      if (this.loadedServices.length != 0) {
-        return this.loadedServices.filter(function (item) {
-          return item.label.toLowerCase().indexOf(_this.searchString.toLowerCase()) !== -1 && _this.selectedIds.indexOf(item.id.toString()) == -1;
+      if (this.loadedOptions.lenght != 0) {
+        this.loadedOptions.forEach(function (elem) {
+          buildedArr.push({
+            id: elem.id,
+            label: elem.label
+          });
         });
+      }
+
+      return buildedArr;
+    },
+    filtredOptions: function filtredOptions() {
+      var _this2 = this;
+
+      var filtredArr = [];
+
+      if (this.buildedOptions.length != 0) {
+        filtredArr = this.buildedOptions.filter(function (item) {
+          return item.label.toLowerCase().indexOf(_this2.searchString.toLowerCase()) !== -1 && !_this2.selectedIds.some(function (sItem) {
+            return sItem === item.id;
+          });
+        });
+        return filtredArr;
       } else return [];
     }
   },
   watch: {
     searchString: function searchString(val) {
-      var _this2 = this;
-
-      if (val.length < 3) {
-        this.loadedServices = [];
+      if (val.length < this.symbolsLimit) {
+        this.loadedOptions = [];
+        this.searchStatus = false;
       }
 
-      if (val.length == 3) {
-        var buildedArr = [];
-        axios_default()({
-          method: 'get',
-          url: this.apiUrl,
-          params: {
-            clinicId: this.clicnicId,
-            term: val
-          }
-        }).then(function (response) {
-          _this2.searchStatus = true;
-          response.data.results.forEach(function (elem) {
-            buildedArr.push({
-              id: elem.id,
-              label: elem.label
-            });
-
-            if ('children' in elem) {
-              elem.children.forEach(function (childrenElem) {
-                buildedArr.push({
-                  id: childrenElem.id,
-                  label: childrenElem.label
-                });
-              });
-            }
-          });
-        }).then(function () {
-          _this2.loadedServices = buildedArr;
-        });
+      if (val.length == this.symbolsLimit) {
+        this.$emit('querySettingsEmit', this.querySettings);
+      }
+    },
+    selectedOptions: function selectedOptions(val) {
+      if (this.changeIteration > 0) {
+        this.$emit('input', val);
       }
     }
   },
   created: function created() {
     var _this3 = this;
 
-    this.alreadySelected.forEach(function (elem) {
-      if (elem.checked == true) {
-        _this3.selectedServices.push({
-          id: elem.id,
-          label: elem.label
-        });
-      }
+    if (this.alreadySelected.length !== 0) {
+      this.alreadySelected.forEach(function (item) {
+        return _this3.selectedOptions.push(item);
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this4 = this;
 
-      if ('children' in elem) {
-        elem.children.forEach(function (childrenElem) {
-          if (childrenElem.checked == true) {
-            _this3.selectedServices.push({
-              id: childrenElem.id,
-              label: childrenElem.label
-            });
-          }
-        });
-      }
+    this.$nextTick().then(function () {
+      _this4.changeIteration++;
     });
+
+    if (!this.textBox) {
+      this.$emit('querySettingsEmit', this.querySettings);
+    }
   },
   methods: {
     handleFocusOut: function handleFocusOut() {
@@ -4498,11 +4655,11 @@ var TextHighlight = normalizeComponent_1({}, __vue_inject_styles__, __vue_script
     },
     addService: function addService(service) {
       this.$refs.tetxtInput.focus();
-      this.selectedServices.push(service);
+      this.selectedOptions.push(service);
     },
     removeSelected: function removeSelected(index) {
       this.$refs.tetxtInput.focus();
-      this.selectedServices.splice(index, 1);
+      this.selectedOptions.splice(index, 1);
     }
   }
 });
@@ -4613,8 +4770,8 @@ function componentNormalizer_normalizeComponent (
 
 var component = componentNormalizer_normalizeComponent(
   multiselect_types_select_multiplevue_type_script_lang_js_,
-  select_multiplevue_type_template_id_35d81d19_render,
-  select_multiplevue_type_template_id_35d81d19_staticRenderFns,
+  select_multiplevue_type_template_id_629ca85b_render,
+  select_multiplevue_type_template_id_629ca85b_staticRenderFns,
   false,
   null,
   null,
@@ -4623,15 +4780,14 @@ var component = componentNormalizer_normalizeComponent(
 )
 
 /* harmony default export */ var select_multiple = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=fc733b48&
-var select_checkboxvue_type_template_id_fc733b48_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus && _vm.searchStatus},on:{"click":_vm.handleFocus}},[_c('transition-group',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedParents.length !== 0),expression:"selectedParents.length !== 0"}],staticClass:"slected-services",attrs:{"name":"fade-zoom","tag":"ul"}},_vm._l((_vm.selectedParents),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "+_vm._s(service.checkedStatus)),_c('i',{on:{"click":function($event){return _vm.removeService(service, index)}}})])}),0),_c('div',{staticClass:"text-input"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.searchString.length >= 3 && _vm.searchStatus == false),expression:"searchString.length >= 3 && searchStatus == false"}],staticClass:"progress"})]),_c('ul',{staticClass:"services-list services-list_checboxes"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,class:{'is-checked': service.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label))])],1),_c('ul',_vm._l((service.children),function(childService){return _c('li',{key:childService.id,class:{'is-checked': childService.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(childService)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(childService.label))])],1)])}),0)])})],2)],1)}
-var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=140f2b7a&
+var select_checkboxvue_type_template_id_140f2b7a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus && _vm.searchStatus},on:{"click":_vm.handleFocus}},[_c('transition-group',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedParents.length !== 0),expression:"selectedParents.length !== 0"}],staticClass:"slected-services",attrs:{"name":"fade-zoom","tag":"ul"}},_vm._l((_vm.selectedParents),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "+_vm._s(service.checkedStatus)),_c('i',{on:{"click":function($event){return _vm.removeService(service, index)}}})])}),0),_c('div',{staticClass:"text-input"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.searchString.length >= 3 && _vm.searchStatus == false),expression:"searchString.length >= 3 && searchStatus == false"}],staticClass:"progress"})]),_c('ul',{staticClass:"services-list services-list_checboxes"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,class:{'is-checked': service.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label))])],1),_c('ul',_vm._l((service.children),function(childService){return _c('li',{key:childService.id,class:{'is-checked': childService.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(childService)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(childService.label))])],1)])}),0)])})],2)],1)}
+var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=fc733b48&
+// CONCATENATED MODULE: ./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=140f2b7a&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=script&lang=js&
-
 
 //
 //
@@ -4704,23 +4860,23 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
     },
     branchesIds: {
       // type: Array,
-      required: false // default() {
-      //   return 15212;
-      // }
-
+      required: false,
+      default: function _default() {
+        return 15212;
+      }
     },
     clinicId: {
-      required: false // default() {
-      //   return 15212;
-      // }
-
+      required: false,
+      default: function _default() {
+        return 15212;
+      }
     },
     apiUrl: {
       type: String,
-      required: false // default() {
-      //   return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
-      // }
-
+      required: false,
+      default: function _default() {
+        return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
+      }
     }
   },
   created: function created() {
@@ -4728,13 +4884,13 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
 
     if (this.alreadySelected.length !== 0) {
       this.alreadySelected.forEach(function (elem) {
-        elem.id = elem.id.toString();
+        elem.id = elem.id;
         elem.parent = true;
         elem.checkedSum = 0;
 
         if ('children' in elem) {
           elem.children.forEach(function (childElem) {
-            childElem.id = childElem.id.toString();
+            childElem.id = childElem.id;
             childElem.parent = false;
           });
         }
@@ -4767,13 +4923,13 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
       var idsArr = [];
       this.selectedParents.forEach(function (item) {
         if (item.checked == true) {
-          idsArr.push(item.id.toString());
+          idsArr.push(item.id);
         }
 
         if ('children' in item) {
           item.children.forEach(function (childItem) {
             if (childItem.checked == true) {
-              idsArr.push(childItem.id.toString());
+              idsArr.push(childItem.id);
             }
           });
         }
@@ -4783,7 +4939,7 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
     selectedParentsIds: function selectedParentsIds() {
       var idsArr = [];
       this.selectedParents.forEach(function (item) {
-        idsArr.push(item.id.toString());
+        idsArr.push(item.id);
       });
       return idsArr;
     },
@@ -4795,13 +4951,21 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
       mapedArr = this.queryCache.map(function (item, index) {
         if (_this3.qstatus) {
           if ('children' in item) {
-            item.children.forEach(function (childElem) {
-              childElem.parentId = item.id.toString();
+            for (var i = item.children.length - 1; i >= 0; i--) {
+              item.children[i].parentId = item.id;
+
+              if (item.children[i].id == item.children[i].parentId) {
+                item.children.splice(i, 1);
+              }
+            }
+
+            item.children.forEach(function (childElem, index) {
+              childElem.parentId = item.id;
             });
           }
 
           if (_this3.selectedIds.some(function (elem) {
-            return elem.toString() == item.id.toString();
+            return elem == item.id;
           })) {
             item.checked = true;
           } else {
@@ -4819,7 +4983,7 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
               // }
               ////////////////////////////////////////////////////
               if (_this3.selectedIds.some(function (elem) {
-                return elem.toString() == childItem.id.toString();
+                return elem == childItem.id;
               })) {
                 childItem.checked = true;
               } else {
@@ -4871,10 +5035,10 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
         // добавлеие через ребенка
         if (service.parent == false && service.checked == false) {
           if (!this.selectedParentsIds.some(function (item) {
-            return item.toString() == service.parentId.toString();
+            return item == service.parentId;
           })) {
             this.filtredServices.forEach(function (filtredItem) {
-              if (filtredItem.id.toString() == service.parentId.toString()) {
+              if (filtredItem.id == service.parentId) {
                 service.checked = true;
 
                 _this4.selectedParents.push(filtredItem);
@@ -4887,7 +5051,7 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
         else if (service.parent == false && service.checked == true) {
             service.checked = false;
             this.selectedParents.forEach(function (selecteParentItem, index) {
-              if (selecteParentItem.id.toString() == service.parentId.toString() && selecteParentItem.checked == false && selecteParentItem.children.every(function (item) {
+              if (selecteParentItem.id == service.parentId && selecteParentItem.checked == false && selecteParentItem.children.every(function (item) {
                 return item.checked == false;
               })) {
                 _this4.selectedParents.splice(index, 1);
@@ -4900,7 +5064,7 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
             } // удаление одиночного елемента
             else if (service.parent == true && service.checked == true && !('children' in service)) {
                 this.selectedParents.forEach(function (selecteParentItem, index) {
-                  if (selecteParentItem.id.toString() == service.id.toString()) {
+                  if (selecteParentItem.id == service.id) {
                     _this4.selectedParents.splice(index, 1);
                   }
                 });
@@ -4908,7 +5072,7 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
               } // добавление через родителя
               else if (service.parent == true && service.checked == false) {
                   if ('children' in service && !this.selectedParentsIds.some(function (item) {
-                    return item.toString() == service.id.toString();
+                    return item == service.id;
                   })) {
                     service.children.forEach(function (item) {
                       item.checked = true;
@@ -4922,7 +5086,7 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
                 else if (service.parent == true && 'children' in service && service.checked == true) {
                     service.checked = false;
                     this.selectedParents.forEach(function (selecteParentItem, index) {
-                      if (selecteParentItem.id.toString() == service.id.toString() && selecteParentItem.checked == false && selecteParentItem.children.every(function (item) {
+                      if (selecteParentItem.id == service.id && selecteParentItem.checked == false && selecteParentItem.children.every(function (item) {
                         return item.checked == false;
                       })) {
                         _this4.selectedParents.splice(index, 1);
@@ -4980,21 +5144,21 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
         }).then(function (response) {
           _this5.queryIteration++;
           response.data.results.forEach(function (elem) {
-            elem.id = elem.id.toString();
+            elem.id = elem.id;
             elem.checked = false;
             elem.parent = true;
             elem.checkedSum = 0;
 
             if ('children' in elem) {
               elem.children.forEach(function (childElem) {
-                childElem.id = childElem.id.toString();
+                childElem.id = childElem.id;
                 childElem.parent = false;
                 childElem.checked = false;
               });
             }
 
             if (_this5.queryCache.length !== 0 && !_this5.queryCache.some(function (item) {
-              return item.id.toString() == elem.id.toString();
+              return item.id == elem.id;
             })) {
               _this5.queryCache.push(elem);
             } else if (_this5.queryCache.length == 0) {
@@ -5004,10 +5168,10 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
 
             if ('children' in elem && _this5.queryIteration == 1) {
               _this5.alreadySelected.forEach(function (queryCacheItem) {
-                if (queryCacheItem.id.toString() == elem.id.toString()) {
+                if (queryCacheItem.id == elem.id) {
                   elem.children.forEach(function (childElem) {
                     if (!_this5.selectedIds.some(function (idItem) {
-                      return idItem == childElem.id.toString();
+                      return idItem == childElem.id;
                     })) {
                       childElem.checked = false;
                       queryCacheItem.children.push(childElem);
@@ -5037,8 +5201,8 @@ var select_checkboxvue_type_template_id_fc733b48_staticRenderFns = []
 
 var select_checkbox_component = componentNormalizer_normalizeComponent(
   multiselect_types_select_checkboxvue_type_script_lang_js_,
-  select_checkboxvue_type_template_id_fc733b48_render,
-  select_checkboxvue_type_template_id_fc733b48_staticRenderFns,
+  select_checkboxvue_type_template_id_140f2b7a_render,
+  select_checkboxvue_type_template_id_140f2b7a_staticRenderFns,
   false,
   null,
   null,
@@ -5047,12 +5211,12 @@ var select_checkbox_component = componentNormalizer_normalizeComponent(
 )
 
 /* harmony default export */ var select_checkbox = (select_checkbox_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-single.vue?vue&type=template&id=32bc7501&
-var select_singlevue_type_template_id_32bc7501_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],ref:"tetxtInput",attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('ul',{staticClass:"services-list"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,on:{"click":function($event){return _vm.addService(service)}}},[_vm._v(_vm._s(service.label))])})],2)])}
-var select_singlevue_type_template_id_32bc7501_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-single.vue?vue&type=template&id=6df8832e&
+var select_singlevue_type_template_id_6df8832e_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus},on:{"click":_vm.handleFocus}},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],class:{'has-selected-value': !_vm.textFieldFocus && _vm.selectedOptions.length !== 0},attrs:{"type":"text","readonly":!_vm.textBox,"placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('ul',{staticClass:"services-list"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredOptions.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredOptions),function(service){return _c('li',{key:service.id,on:{"click":function($event){return _vm.addService(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label))])],1)})],2)])}
+var select_singlevue_type_template_id_6df8832e_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/multiselect-types/select-single.vue?vue&type=template&id=32bc7501&
+// CONCATENATED MODULE: ./src/components/multiselect-types/select-single.vue?vue&type=template&id=6df8832e&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-single.vue?vue&type=script&lang=js&
 
@@ -5075,112 +5239,186 @@ var select_singlevue_type_template_id_32bc7501_staticRenderFns = []
 //
 //
 //
+//
+//
+
 
 
 /* harmony default export */ var select_singlevue_type_script_lang_js_ = ({
   name: 'select-single',
   mixins: [vue_clickaway_common["mixin"]],
+  components: {
+    'text-highlight': vue_text_highlight_esm
+  },
   data: function data() {
     return {
       contFocus: false,
       textFieldFocus: false,
       searchString: '',
       searchStatus: false,
-      loadedServices: [],
-      selectedServices: []
+      loadedOptions: [],
+      selectedOptions: [],
+      changeIteration: 0,
+      testVal: ''
     };
   },
+  created: function created() {
+    var _this = this;
+
+    if (this.alreadySelected.length !== 0) {
+      this.alreadySelected.forEach(function (item) {
+        return _this.selectedOptions.push(item);
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    this.$nextTick().then(function () {
+      _this2.changeIteration++;
+    });
+
+    if (!this.textBox) {
+      this.$emit('querySettingsEmit', this.querySettings);
+    }
+  },
   props: {
-    clinicId: {
+    symbolsLimit: {
+      type: Number,
+      required: false,
+      default: 3
+    },
+    placeholder: {
+      type: String,
       required: true
     },
-    branchesIds: {
-      type: Array,
+    secondPlaceholder: {
+      type: String,
+      required: true
+    },
+    async: {
+      type: Boolean,
+      required: true
+    },
+    loadingOptions: {
+      type: Function,
       required: false
     },
+    textBox: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    // clinicId: {
+    //   required: true
+    // },
+    // branchesIds: {
+    //   required: false,
+    // },
     apiUrl: {
       type: String,
       required: true
+    },
+    alreadySelected: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
     }
   },
   methods: {
     handleFocusOut: function handleFocusOut() {
       this.contFocus = false;
+      this.searchString = '';
+      this.loadedOptions = [];
     },
     handleFocus: function handleFocus() {
       this.contFocus = true;
     },
     addService: function addService(service) {
-      this.selectedServices.splice(0, 1);
-      this.selectedServices.push(service);
+      var _this3 = this;
+
+      this.selectedOptions.splice(0, 1);
+      this.selectedOptions.push(service);
       this.searchString = '';
+      setTimeout(function () {
+        _this3.contFocus = false;
+      }, 0);
     },
     removeSelected: function removeSelected(index) {
-      this.selectedServices.splice(index, 1);
+      this.selectedOptions.splice(index, 1);
     }
   },
   computed: {
+    querySettings: function querySettings() {
+      var _this4 = this;
+
+      return {
+        async: this.async,
+        searchString: this.searchString,
+        callback: function callback(options) {
+          _this4.loadedOptions = options;
+          _this4.searchStatus = true;
+        }
+      };
+    },
     textSearchStatus: function textSearchStatus() {
-      if (this.selectedServices.length != 0) {
-        return this.textFieldFocus ? 'Начните вводить название услуги' : this.selectedServices[0].label;
+      if (this.selectedOptions.length != 0) {
+        return this.textFieldFocus ? this.secondPlaceholder : this.selectedOptions[0].label;
       } else {
-        return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выберите услуги';
+        return this.textFieldFocus ? this.secondPlaceholder : this.placeholder;
       }
     },
     selectedIds: function selectedIds() {
       var idsArr = [];
-      this.selectedServices.forEach(function (item) {
-        idsArr.push(item.id.toString());
+      this.selectedOptions.forEach(function (item) {
+        idsArr.push(item.id);
       });
       return idsArr;
     },
-    filtredServices: function filtredServices() {
-      var _this = this;
+    buildedOptions: function buildedOptions() {
+      var buildedArr = [];
 
-      if (this.loadedServices.length != 0) {
-        return this.loadedServices.filter(function (item) {
-          return item.label.toLowerCase().indexOf(_this.searchString.toLowerCase()) !== -1 && _this.selectedIds.indexOf(item.id.toString()) == -1;
+      if (this.loadedOptions.lenght != 0) {
+        this.loadedOptions.forEach(function (elem) {
+          buildedArr.push({
+            id: elem.id,
+            label: elem.label
+          });
         });
+      }
+
+      return buildedArr;
+    },
+    filtredOptions: function filtredOptions() {
+      var _this5 = this;
+
+      var filtredArr = [];
+
+      if (this.buildedOptions.length != 0) {
+        filtredArr = this.buildedOptions.filter(function (item) {
+          return item.label.toLowerCase().indexOf(_this5.searchString.toLowerCase()) !== -1 && !_this5.selectedIds.some(function (sItem) {
+            return sItem === item.id;
+          });
+        });
+        return filtredArr;
       } else return [];
     }
   },
   watch: {
     searchString: function searchString(val) {
-      var _this2 = this;
-
-      if (val.length < 3) {
-        this.loadedServices = [];
+      if (val.length < this.symbolsLimit) {
+        this.loadedOptions = [];
+        this.searchStatus = false;
       }
 
-      if (val.length == 3) {
-        var buildedArr = [];
-        axios_default()({
-          method: 'get',
-          url: thsi.apiUrl,
-          params: {
-            clinicId: this.clicnicId,
-            term: val
-          }
-        }).then(function (response) {
-          _this2.searchStatus = true;
-          response.data.results.forEach(function (elem) {
-            buildedArr.push({
-              id: elem.id,
-              label: elem.label
-            });
-
-            if ('children' in elem) {
-              elem.children.forEach(function (childrenElem) {
-                buildedArr.push({
-                  id: childrenElem.id,
-                  label: childrenElem.label
-                });
-              });
-            }
-          });
-        }).then(function () {
-          _this2.loadedServices = buildedArr;
-        });
+      if (val.length == this.symbolsLimit) {
+        this.$emit('querySettingsEmit', this.querySettings);
+      }
+    },
+    selectedOptions: function selectedOptions(val) {
+      if (this.changeIteration > 0) {
+        this.$emit('input', val);
       }
     }
   }
@@ -5197,8 +5435,8 @@ var select_singlevue_type_template_id_32bc7501_staticRenderFns = []
 
 var select_single_component = componentNormalizer_normalizeComponent(
   multiselect_types_select_singlevue_type_script_lang_js_,
-  select_singlevue_type_template_id_32bc7501_render,
-  select_singlevue_type_template_id_32bc7501_staticRenderFns,
+  select_singlevue_type_template_id_6df8832e_render,
+  select_singlevue_type_template_id_6df8832e_staticRenderFns,
   false,
   null,
   null,
@@ -5208,6 +5446,7 @@ var select_single_component = componentNormalizer_normalizeComponent(
 
 /* harmony default export */ var select_single = (select_single_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=script&lang=js&
+
 //
 //
 //
@@ -5229,6 +5468,12 @@ var select_single_component = componentNormalizer_normalizeComponent(
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -5239,69 +5484,124 @@ var select_single_component = componentNormalizer_normalizeComponent(
     'select-checkbox': select_checkbox,
     'select-single': select_single
   },
-  methods: {
-    inputTrigger: function inputTrigger(val) {
-      this.$emit('input', val);
-    }
-  },
-  // data() {
-  //   return {
-  //     test: [
-  //       {
-  //         "id": '1919369',
-  //         "label": "УЗИ органов грудной клетки",
-  //         checked: true,
-  //         children: [
-  //             {"id": 852317, "label": "УЗИ легких и бронхов", checked: true},
-  //             // {"id": 541901, "label": "УЗИ плевральной полости", checked: true}
-  //         ]
-  //       },
-  //       {
-  //         "id": '1828735',
-  //         "label": "УЗИ суставов",
-  //         checked: false,
-  //         children: [
-  //             {"id": 546655, "label": "УЗИ коленного сустава (УЗИ колена)", checked: true},
-  //             {"id": 546654, "label": "УЗИ тазобедренного сустава", checked: true}
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // },
-  watch: {
-    value: function value(val) {
-      console.log('hoy');
-      this.$emit('input', val);
-    }
-  },
   props: {
     value: {
       type: Array,
       required: true
     },
-    selectType: {
-      type: String,
-      required: false // default() {
-      //   return 'select-checkbox';
-      // }
-
+    symbolsLimit: {
+      type: Number,
+      required: false,
+      default: 3
     },
-    branchesIds: {
-      type: Array,
+    placeholder: {
+      type: String,
+      required: true
+    },
+    secondPlaceholder: {
+      type: String,
+      required: true
+    },
+    async: {
+      type: Boolean,
+      required: true
+    },
+    loadingOptions: {
+      type: Function,
       required: false
     },
-    clinicId: {
-      required: false // default() {
-      //   return 15212;
-      // }
-
+    textBox: {
+      type: Boolean,
+      required: false,
+      default: true
     },
-    apiUrl: {
+    alreadySelected: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    selectType: {
       type: String,
-      required: true // default() {
-      //   return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
-      // }
-
+      required: false
+    },
+    loadOptions: {
+      type: Function,
+      default: function _default(querySettings) {
+        if (querySettings.async) {
+          axios_default()({
+            method: 'get',
+            url: 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/',
+            params: {
+              clinicId: 5129,
+              term: querySettings.searchString
+            }
+          }).then(function (response) {
+            querySettings.callback(response.data.results);
+          }).catch(function (error) {
+            console.error(error);
+          });
+        } else {
+          querySettings.callback([{
+            id: 1828735,
+            label: "УЗИ суставов"
+          }, {
+            id: 1919369,
+            label: 'УЗИ органов грудной клетки'
+          }]);
+        }
+      }
+    }
+  },
+  data: function data() {
+    return {
+      loadSettings: {},
+      // test: [
+      //   {
+      //     "id": '1919369',
+      //     "label": "УЗИ органов грудной клетки",
+      //     checked: true,
+      //     children: [
+      //         {"id": 852317, "label": "УЗИ легких и бронхов", checked: true},
+      //         // {"id": 541901, "label": "УЗИ плевральной полости", checked: true}
+      //     ]
+      //   },
+      //   {
+      //     "id": '1828735',
+      //     "label": "УЗИ суставов",
+      //     checked: false,
+      //     children: [
+      //         {"id": 546655, "label": "УЗИ коленного сустава (УЗИ колена)", checked: true},
+      //         {"id": 546654, "label": "УЗИ тазобедренного сустава", checked: true}
+      //     ]
+      //   }
+      // ]
+      test: [// {
+        //   "id": 1919369,
+        //   "label": "УЗИ органов грудной клетки",
+        // },
+        // {
+        //   "id": 1828735,
+        //   "label": "УЗИ суставов",
+        // }
+      ]
+    };
+  },
+  methods: {
+    inputTrigger: function inputTrigger(val) {
+      console.log(val);
+      this.$emit('input', val);
+    },
+    setLoadSettings: function setLoadSettings(settings) {
+      this.loadSettings = settings;
+    }
+  },
+  watch: {
+    value: function value(val) {
+      this.$emit('input', val);
+    },
+    loadSettings: function loadSettings(val) {
+      this.loadOptions(val);
     }
   }
 });
@@ -5336,6 +5636,15 @@ var App_component = componentNormalizer_normalizeComponent(
 
 /* harmony default export */ var entry_lib = __webpack_exports__["default"] = (App);
 
+
+
+/***/ }),
+
+/***/ "fdef":
+/***/ (function(module, exports) {
+
+module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
+  '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
 
 /***/ })

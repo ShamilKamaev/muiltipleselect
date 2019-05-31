@@ -2,19 +2,24 @@
   <div id="m-select">
     <component 
       :is="selectType" 
-      :clinic-id="clinicId" 
-      :branches-ids="branchesIds" 
-      :api-url="apiUrl" 
+      :symbols-limit="symbolsLimit"
+      :placeholder="placeholder" 
+      :second-placeholder="secondPlaceholder"
+      :text-box="textBox"
       :already-selected="value" 
-      @input="inputTrigger">
+      @input="inputTrigger"
+      @querySettingsEmit="setLoadSettings">
     </component>
     <!-- <component 
-      :is="'select-checkbox'" 
-      :clinic-id="5129" 
-      :branches-ids="134467"
-      :api-url="'http://spb.p.test.napopravku.ru/profile/load-smd-tree/'"
+      :is="'select-multiple'"
+      :async="true"
+      :symbols-limit="3"
+      :placeholder="'Выберите врача'"
+      :second-placeholder="'Начните вводить имя врача'"
+      :text-box="true" 
       :already-selected="test"
-      @input="inputTrigger">
+      @input="inputTrigger"
+      @querySettingsEmit="setLoadSettings">
     </component> -->
   </div>
 </template>
@@ -23,6 +28,7 @@
   import selectMultiple from './components/multiselect-types/select-multiple'
   import selectCheckbox from './components/multiselect-types/select-checkbox'
   import selectSingle from './components/multiselect-types/select-single'
+  import axios from 'axios'
   
 
   export default {
@@ -34,44 +40,6 @@
       'select-single': selectSingle,
     },
 
-    methods: {
-      inputTrigger(val) {        
-        this.$emit('input', val);
-      }
-    },
-
-    // data() {
-    //   return {
-    //     test: [
-    //       {
-    //         "id": '1919369',
-    //         "label": "УЗИ органов грудной клетки",
-    //         checked: true,
-    //         children: [
-    //             {"id": 852317, "label": "УЗИ легких и бронхов", checked: true},
-    //             // {"id": 541901, "label": "УЗИ плевральной полости", checked: true}
-    //         ]
-    //       },
-    //       {
-    //         "id": '1828735',
-    //         "label": "УЗИ суставов",
-    //         checked: false,
-    //         children: [
-    //             {"id": 546655, "label": "УЗИ коленного сустава (УЗИ колена)", checked: true},
-    //             {"id": 546654, "label": "УЗИ тазобедренного сустава", checked: true}
-    //         ]
-    //       }
-    //     ]
-    //   }
-    // },
-
-    watch: {
-      value(val) {
-        console.log('hoy');
-        
-        this.$emit('input', val);
-      }
-    },
 
     props: {
       value: {
@@ -79,34 +47,131 @@
         required: true
       }, 
 
+       symbolsLimit: {
+        type: Number,
+        required: false,
+        default: 3
+      },
+      placeholder: {
+        type: String,
+        required: true
+      },
+      secondPlaceholder: {
+        type: String,
+        required: true
+      },
+      async: {
+        type: Boolean,
+        required: true
+      },
+      loadingOptions: {
+        type: Function,
+        required: false
+      },
+      textBox: {
+        type: Boolean,
+        required: false,
+        default: true
+      },
+      alreadySelected: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+
       selectType: {
         type: String,
         required: false,
-        // default() {
-        //   return 'select-checkbox';
-        // }
       },
 
-      branchesIds: {
-        type: Array,
-        required: false,
-      }, 
-
-      clinicId: {
-        required: false,
-        // default() {
-        //   return 15212;
-        // }
-      },
-
-      apiUrl: {
-        type: String,
-        required: true,
-        // default() {
-        //   return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
-        // }
+      loadOptions: {
+        type: Function,
+        default (querySettings) {
+          if(querySettings.async) {
+            axios({
+              method: 'get',
+              url: 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/',
+              params: {
+                clinicId: 5129,
+                term: querySettings.searchString
+              },
+            }).then(response => {
+              querySettings.callback(response.data.results);
+            }).catch(error => {
+              console.error(error);
+            })
+          } else {
+            querySettings.callback([{id: 1828735, label: "УЗИ суставов"}, {id: 1919369, label: 'УЗИ органов грудной клетки'}])
+          }
+        },
       }
-    }
+    },
+
+
+
+    data() {
+      return {
+        loadSettings: {},
+
+        // test: [
+        //   {
+        //     "id": '1919369',
+        //     "label": "УЗИ органов грудной клетки",
+        //     checked: true,
+        //     children: [
+        //         {"id": 852317, "label": "УЗИ легких и бронхов", checked: true},
+        //         // {"id": 541901, "label": "УЗИ плевральной полости", checked: true}
+        //     ]
+        //   },
+        //   {
+        //     "id": '1828735',
+        //     "label": "УЗИ суставов",
+        //     checked: false,
+        //     children: [
+        //         {"id": 546655, "label": "УЗИ коленного сустава (УЗИ колена)", checked: true},
+        //         {"id": 546654, "label": "УЗИ тазобедренного сустава", checked: true}
+        //     ]
+        //   }
+        // ]
+
+
+        test: [
+          // {
+          //   "id": 1919369,
+          //   "label": "УЗИ органов грудной клетки",
+          // },
+          // {
+          //   "id": 1828735,
+          //   "label": "УЗИ суставов",
+          // }
+        ]
+      }
+    },
+
+
+
+    methods: {
+      inputTrigger(val) {        
+        console.log(val);
+        this.$emit('input', val);
+      },
+      setLoadSettings(settings) {
+        this.loadSettings = settings;
+      }
+    },
+
+
+
+    watch: {
+      value(val) {
+        this.$emit('input', val);
+      },
+
+      loadSettings(val) {
+        this.loadOptions(val);
+      }
+    },
   }
 </script>
 
@@ -170,6 +235,20 @@
       outline: none;
       font-family: Gotham Pro, sans-serif;
       font-weight: normal;
+      &.has-selected-value {
+        &::-webkit-input-placeholder {
+          color: #000;
+        }
+        &:-moz-placeholder {
+          color: #000;
+        }
+        &::-moz-placeholder {
+          color: #000;
+        }
+        &:-ms-input-placeholder {
+          color: #000;
+        }
+      }
     }
   }
 

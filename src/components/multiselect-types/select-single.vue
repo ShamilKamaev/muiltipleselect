@@ -3,15 +3,17 @@
      :class="{'is-active': contFocus}"
       v-on-clickaway="handleFocusOut"
       @click="handleFocus">
-      <input type="text" 
+      <input 
+        :class="{'has-selected-value': !textFieldFocus && selectedOptions.length !== 0}"
+        type="text" 
+        :readonly="!textBox"
         :placeholder="textSearchStatus" 
         v-model="searchString"
         @focus="textFieldFocus = true"
-        @blur="textFieldFocus = false"
-        ref="tetxtInput">
+        @blur="textFieldFocus = false">
       <ul class="services-list">
-        <li class="not-found" v-if="searchStatus && searchString.length > 2 && filtredServices.length == 0">Совпадений не найдено</li>
-        <li v-for="service in filtredServices" :key="service.id" @click="addService(service)">{{ service.label }}</li>
+        <li class="not-found" v-if="searchStatus && searchString.length > 2 && filtredOptions.length == 0">Совпадений не найдено</li>
+        <li v-for="service in filtredOptions" :key="service.id" @click="addService(service)"><text-highlight :queries="searchString">{{ service.label }}</text-highlight></li>
       </ul>
     </div>
   </template>
@@ -19,10 +21,15 @@
   <script>
   import axios from 'axios'
   import { mixin as clickaway } from 'vue-clickaway';
+  import TextHighlight from 'vue-text-highlight';
   
   export default {
     name: 'select-single',
     mixins: [ clickaway ],
+
+    components: {
+      'text-highlight': TextHighlight,
+    },
 
     data() {
       return {
@@ -30,105 +37,166 @@
         textFieldFocus: false,
         searchString: '',
         searchStatus: false,
-        loadedServices: [],
-        selectedServices: [],
+        loadedOptions: [],
+        selectedOptions: [],
+        changeIteration: 0,
+        testVal: '',
       }
     },
 
+    created() {
+      if(this.alreadySelected.length !== 0) {
+        this.alreadySelected.forEach(item => this.selectedOptions.push(item));
+      }
+    },
+
+    mounted() {
+      this.$nextTick().then(() => {
+        this.changeIteration++;
+      });
+
+      if(!this.textBox) {
+        this.$emit('querySettingsEmit', this.querySettings);
+      }
+    },
+
+
     props: {
-      clinicId: {
+      symbolsLimit: {
+        type: Number,
+        required: false,
+        default: 3
+      },
+      placeholder: {
+        type: String,
         required: true
       },
-
-      branchesIds: {
-        type: Array,
+      secondPlaceholder: {
+        type: String,
+        required: true
+      },
+      async: {
+        type: Boolean,
+        required: true
+      },
+      loadingOptions: {
+        type: Function,
+        required: false
+      },
+      textBox: {
+        type: Boolean,
         required: false,
+        default: true
       },
 
+
+
+      // clinicId: {
+      //   required: true
+      // },
+      // branchesIds: {
+      //   required: false,
+      // },
       apiUrl: {
         type: String,
         required: true
-      }
+      }, 
+      alreadySelected: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
     },
 
     methods: {
       handleFocusOut() {
         this.contFocus = false;
+        this.searchString = '';
+        this.loadedOptions = [];
        },
       handleFocus() {
         this.contFocus = true;
        },
       addService(service) {
-        this.selectedServices.splice(0, 1);
-        this.selectedServices.push(service);
+        this.selectedOptions.splice(0, 1);
+        this.selectedOptions.push(service);
         this.searchString = '';
+        setTimeout(() => {
+          this.contFocus = false;
+        }, 0);
       },
       removeSelected(index) {
-        this.selectedServices.splice(index, 1);
+        this.selectedOptions.splice(index, 1);
       }
     },
 
     computed: {
+      querySettings() {
+        return ({
+          async: this.async,
+          searchString: this.searchString,
+          callback: options => {
+            this.loadedOptions = options;
+            this.searchStatus = true;
+          }
+        })
+      },
+
       textSearchStatus() {
-        if(this.selectedServices.length != 0) {
-          return this.textFieldFocus ? 'Начните вводить название услуги' : this.selectedServices[0].label
+        if(this.selectedOptions.length != 0) {
+          return this.textFieldFocus ? this.secondPlaceholder : this.selectedOptions[0].label
         } else {
-          return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выберите услуги'
+          return this.textFieldFocus ? this.secondPlaceholder : this.placeholder
         }
       },
 
       selectedIds() {
         let idsArr = [];
-        this.selectedServices.forEach(item => {
-          idsArr.push(item.id.toString());
+        this.selectedOptions.forEach(item => {
+          idsArr.push(item.id);
         })
         return idsArr;
       },
 
-      filtredServices() {
-        if (this.loadedServices.length != 0) {
-          return (
-            this.loadedServices.filter(item => {
-              return item.label.toLowerCase().indexOf(this.searchString.toLowerCase()) !== -1 && this.selectedIds.indexOf(item.id.toString()) == -1;
+
+      buildedOptions() {
+        let buildedArr = [];
+        if(this.loadedOptions.lenght != 0) {
+          this.loadedOptions.forEach(elem => {
+            buildedArr.push({
+              id: elem.id,
+              label: elem.label
             })
-          )
+          })
+        }
+        return buildedArr;
+      },
+      
+      filtredOptions() {
+        let filtredArr = [];
+        if (this.buildedOptions.length != 0) {
+          filtredArr = this.buildedOptions.filter(item => {
+            return item.label.toLowerCase().indexOf(this.searchString.toLowerCase()) !== -1 && !this.selectedIds.some(sItem => sItem === item.id)});
+          return filtredArr;
         } else return [];
       }
     },
 
     watch: {
-      searchString: function (val) {
-        if ((val.length < 3)) {
-          this.loadedServices = [];
+      searchString (val) {
+        if (val.length < this.symbolsLimit) {
+          this.loadedOptions = [];
+          this.searchStatus = false;
         }
-        if (val.length == 3) {
-          let buildedArr = [];
-          axios({
-            method: 'get',
-            url: thsi.apiUrl,
-            params: {
-              clinicId: this.clicnicId,
-              term: val
-            },
-          }).then(response => {
-            this.searchStatus = true;
-            response.data.results.forEach(elem => {
-              buildedArr.push({
-                id: elem.id,
-                label: elem.label
-              })
-              if ('children' in elem) {
-                elem.children.forEach(childrenElem => {
-                  buildedArr.push({
-                    id: childrenElem.id,
-                    label: childrenElem.label
-                  });
-                })
-              }
-            })
-          }).then(() => {
-            this.loadedServices = buildedArr;
-          })
+        if (val.length == this.symbolsLimit) {
+          this.$emit('querySettingsEmit', this.querySettings);
+        }
+      },
+
+      selectedOptions(val) {
+        if(this.changeIteration > 0) {
+          this.$emit('input', val);
         }
       }
     }

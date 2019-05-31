@@ -77,24 +77,24 @@
       branchesIds: {
         // type: Array,
         required: false,
-        // default() {
-        //   return 15212;
-        // }
+        default() {
+          return 15212;
+        }
       }, 
 
       clinicId: {
         required: false,
-        // default() {
-        //   return 15212;
-        // }
+        default() {
+          return 15212;
+        }
       },
 
       apiUrl: {
         type: String,
         required: false,
-        // default() {
-        //   return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
-        // }
+        default() {
+          return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
+        }
       }
     },
     
@@ -102,12 +102,12 @@
     created() {
       if (this.alreadySelected.length !== 0) {
         this.alreadySelected.forEach(elem => {
-          elem.id = elem.id.toString();
+          elem.id = elem.id;
           elem.parent = true;
           elem.checkedSum = 0;
           if ('children' in elem) {
             elem.children.forEach(childElem => {
-              childElem.id = childElem.id.toString();
+              childElem.id = childElem.id;
               childElem.parent = false;
             });
           }
@@ -120,12 +120,12 @@
       this.$nextTick().then(() => {
         this.changeIteration++;
       })
-      
-      
+
       if(this.selectedParents.length !== 0) {
         this.changeIteration++;
         this.$forceUpdate();
       }
+
       this.queryCache.forEach(item => {
         this.selectedParents.push(item);
       })
@@ -141,12 +141,12 @@
         let idsArr = [];
         this.selectedParents.forEach(item => {
           if(item.checked == true) {
-            idsArr.push(item.id.toString());
+            idsArr.push(item.id);
           } 
           if('children' in item) {
             item.children.forEach(childItem => {
               if(childItem.checked == true) {
-                idsArr.push(childItem.id.toString());
+                idsArr.push(childItem.id);
               }
             })
           }
@@ -157,7 +157,7 @@
       selectedParentsIds() {
         let idsArr = [];
         this.selectedParents.forEach(item => {
-          idsArr.push(item.id.toString());
+          idsArr.push(item.id);
         })
         return idsArr;
       },
@@ -170,12 +170,19 @@
           mapedArr = this.queryCache.map((item, index) => {
             if(this.qstatus) {
               if ('children' in item) {
-                item.children.forEach(childElem => {
-                  childElem.parentId = item.id.toString();
+                for(let i = item.children.length - 1; i >= 0; i--) {
+                  item.children[i].parentId = item.id;
+                  if(item.children[i].id == item.children[i].parentId) {
+                    item.children.splice(i, 1);
+                  }
+                }
+
+                item.children.forEach((childElem, index) => {
+                  childElem.parentId = item.id;
                 });
               }
               
-              if (this.selectedIds.some(elem => elem.toString() == item.id.toString())) {
+              if (this.selectedIds.some(elem => elem == item.id)) {
                   item.checked = true;
               } else {
                   item.checked = false;
@@ -191,7 +198,7 @@
                   //   }
                   // }
                   ////////////////////////////////////////////////////
-                  if (this.selectedIds.some(elem => elem.toString() == childItem.id.toString())) {
+                  if (this.selectedIds.some(elem => elem == childItem.id)) {
                     childItem.checked = true;
                   } else {
                     childItem.checked = false;
@@ -243,9 +250,9 @@
         if(this.searchStatus) {
           // добавлеие через ребенка
         if(service.parent == false && service.checked == false) {
-          if(!this.selectedParentsIds.some(item => item.toString() == service.parentId.toString())) {
+          if(!this.selectedParentsIds.some(item => item == service.parentId)) {
             this.filtredServices.forEach(filtredItem => {
-              if(filtredItem.id.toString() == service.parentId.toString()) {
+              if(filtredItem.id == service.parentId) {
                 service.checked = true;
                 this.selectedParents.push(filtredItem);
               }
@@ -256,7 +263,7 @@
         else if (service.parent == false && service.checked == true) {
           service.checked = false;
           this.selectedParents.forEach((selecteParentItem, index) => {
-            if(selecteParentItem.id.toString() == service.parentId.toString() && selecteParentItem.checked == false && selecteParentItem.children.every(item => item.checked == false)) {
+            if(selecteParentItem.id == service.parentId && selecteParentItem.checked == false && selecteParentItem.children.every(item => item.checked == false)) {
               this.selectedParents.splice(index, 1);
             }
           })
@@ -270,7 +277,7 @@
         // удаление одиночного елемента
         else if (service.parent == true && service.checked == true && !('children' in service)) {
           this.selectedParents.forEach((selecteParentItem, index) => {
-            if(selecteParentItem.id.toString() == service.id.toString()) {
+            if(selecteParentItem.id == service.id) {
               this.selectedParents.splice(index, 1);
             }
           })
@@ -280,7 +287,7 @@
 
         // добавление через родителя
         else if (service.parent == true && service.checked == false) {
-          if('children' in service && !this.selectedParentsIds.some(item => item.toString() == service.id.toString())) {
+          if('children' in service && !this.selectedParentsIds.some(item => item == service.id)) {
             service.children.forEach(item => {
               item.checked = true;
             });
@@ -294,7 +301,7 @@
         else if (service.parent == true && 'children' in service && service.checked == true) {
           service.checked = false;
           this.selectedParents.forEach((selecteParentItem, index) => {
-            if(selecteParentItem.id.toString() == service.id.toString() && selecteParentItem.checked == false && selecteParentItem.children.every(item => item.checked == false)) {
+            if(selecteParentItem.id == service.id && selecteParentItem.checked == false && selecteParentItem.children.every(item => item.checked == false)) {
               this.selectedParents.splice(index, 1);
             }
           })
@@ -351,18 +358,19 @@
           }).then(response => {
             this.queryIteration++;
             response.data.results.forEach(elem => {
-              elem.id = elem.id.toString();
+              elem.id = elem.id;
               elem.checked = false;
               elem.parent = true;
               elem.checkedSum = 0;
               if('children' in elem) {
                 elem.children.forEach(childElem => {
-                  childElem.id = childElem.id.toString();
+                  
+                  childElem.id = childElem.id;
                   childElem.parent = false;
                   childElem.checked = false;
                 });
               }
-              if(this.queryCache.length !== 0 && !this.queryCache.some(item => item.id.toString() == elem.id.toString())) {
+              if(this.queryCache.length !== 0 && !this.queryCache.some(item => item.id == elem.id)) {
                 this.queryCache.push(elem);
               } else if(this.queryCache.length == 0) {
                 this.queryCache.push(elem);
@@ -371,9 +379,9 @@
               // обновляем данные в уже выбранных
               if('children' in elem && this.queryIteration == 1) {
                 this.alreadySelected.forEach(queryCacheItem => {
-                  if(queryCacheItem.id.toString() == elem.id.toString()) {
+                  if(queryCacheItem.id == elem.id) {
                     elem.children.forEach(childElem => {
-                      if(!this.selectedIds.some(idItem => idItem == childElem.id.toString())){
+                      if(!this.selectedIds.some(idItem => idItem == childElem.id)){
                         childElem.checked = false;
                         queryCacheItem.children.push(childElem);
                       }
@@ -381,8 +389,6 @@
                   }
                 })
               }
-              
-              
             })
             this.searchStatus = true;
           }).catch(error => {

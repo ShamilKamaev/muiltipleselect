@@ -3,20 +3,21 @@
      :class="{'is-active': contFocus}"
       v-on-clickaway="handleFocusOut"
       @click="handleFocus">
-       <ul class="slected-services" v-show="selectedServices.length !== 0">
+       <ul class="slected-services" v-show="selectedOptions.length !== 0">
         <transition-group name="fade-zoom">
-          <li v-for="(service, index) in selectedServices" :key="service.id">{{ service.label }} <i @click="removeSelected(index)"></i></li>
+          <li v-for="(service, index) in selectedOptions" :key="service.id">{{ service.label }} <i @click="removeSelected(index)"></i></li>
         </transition-group>
       </ul>
       <input type="text" 
+        :readonly="!textBox"
         :placeholder="textSearchStatus" 
         v-model="searchString"
         @focus="textFieldFocus = true"
         @blur="textFieldFocus = false"
         ref="tetxtInput">
       <ul class="services-list">
-        <li class="not-found" v-if="searchStatus && searchString.length > 2 && filtredServices.length == 0">Совпадений не найдено</li>
-        <li v-for="service in filtredServices" :key="service.id" @click="addService(service)"><text-highlight :queries="searchString">{{ service.label }} </text-highlight></li>
+        <li class="not-found" v-if="searchStatus && searchString.length > 2 && filtredOptions.length == 0">Совпадений не найдено</li>
+        <li v-for="service in filtredOptions" :key="service.id" @click="addService(service)"><text-highlight :queries="searchString">{{ service.label }} </text-highlight></li>
       </ul>
     </div>
   </template>
@@ -40,122 +41,126 @@
         textFieldFocus: false,
         searchStatus: false,
         searchString: '',
-        loadedServices: [],
-        selectedServices: [],
+        loadedOptions: [],
+        selectedOptions: [],
+        changeIteration: 0,
       }
     },
 
     props: {
+      symbolsLimit: {
+        type: Number,
+        required: false,
+        default: 3
+      },
+      placeholder: {
+        type: String,
+        required: true
+      },
+      secondPlaceholder: {
+        type: String,
+        required: true
+      },
+      async: {
+        type: Boolean,
+        required: true
+      },
+      loadingOptions: {
+        type: Function,
+        required: false
+      },
+      textBox: {
+        type: Boolean,
+        required: false,
+        default: true
+      },
       alreadySelected: {
         type: Array,
         default() {
           return [];
         }
-      },
-
-      branchesIds: {
-        type: Array,
-        required: false,
-      }, 
-
-      clinicId: {
-        required: false,
-        default() {
-          return 15212;
-        }
-      },
-
-      apiUrl: {
-        type: String,
-        required: false,
-        default() {
-          return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
-        }
       }
     },
 
     computed: {
+      querySettings() {
+        return ({
+          async: this.async,
+          searchString: this.searchString,
+          callback: options => {
+            this.loadedOptions = options;
+            this.searchStatus = true;
+          }
+        })
+      },
+
       textSearchStatus() {
         return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выберите услуги'
       },
 
-
       selectedIds() {
         let idsArr = [];
-        this.selectedServices.forEach(item => {
-          idsArr.push(item.id.toString());
+        this.selectedOptions.forEach(item => {
+          idsArr.push(item.id);
         })
         return idsArr;
       },
 
-      filtredServices() {
-        if (this.loadedServices.length != 0) {
-          return (
-            this.loadedServices.filter(item => {
-              return item.label.toLowerCase().indexOf(this.searchString.toLowerCase()) !== -1 && this.selectedIds.indexOf(item.id.toString()) == -1;
+      buildedOptions() {
+        let buildedArr = [];
+        if(this.loadedOptions.lenght != 0) {
+          this.loadedOptions.forEach(elem => {
+            buildedArr.push({
+              id: elem.id,
+              label: elem.label
             })
-          )
+          })
+        }
+        return buildedArr;
+      },
+      
+      filtredOptions() {
+        let filtredArr = [];
+        if (this.buildedOptions.length != 0) {
+          filtredArr = this.buildedOptions.filter(item => {
+            return item.label.toLowerCase().indexOf(this.searchString.toLowerCase()) !== -1 && !this.selectedIds.some(sItem => sItem === item.id)});
+          return filtredArr;
         } else return [];
       }
     },
 
     watch: {
-      searchString: function (val) {
-        if ((val.length < 3)) {
-          this.loadedServices = [];
+      searchString (val) {
+        if (val.length < this.symbolsLimit) {
+          this.loadedOptions = [];
+          this.searchStatus = false;
         }
-        if (val.length == 3) {
-          let buildedArr = [];
-          axios({
-            method: 'get',
-            url: this.apiUrl,
-            params: {
-              clinicId: this.clicnicId,
-              term: val
-            },
-          }).then(response => {
-            this.searchStatus = true;
-            response.data.results.forEach(elem => {
-              buildedArr.push({
-                id: elem.id,
-                label: elem.label
-              })
-              if ('children' in elem) {
-                elem.children.forEach(childrenElem => {
-                  buildedArr.push({
-                    id: childrenElem.id,
-                    label: childrenElem.label
-                  });
-                })
-              }
-            })
-          }).then(() => {
-            this.loadedServices = buildedArr;
-          })
+        if (val.length == this.symbolsLimit) {
+          this.$emit('querySettingsEmit', this.querySettings);
+        }
+      },
+
+      selectedOptions(val) {
+        if(this.changeIteration > 0) {
+          this.$emit('input', val);
         }
       }
     },
     
 
     created() {
-      this.alreadySelected.forEach(elem => {
-        if(elem.checked == true) {
-            this.selectedServices.push({
-            id: elem.id,
-            label: elem.label
-          })
-        }
-        if ('children' in elem) {
-          elem.children.forEach(childrenElem => {
-            if(childrenElem.checked == true) {
-                this.selectedServices.push({
-                id: childrenElem.id,
-                label: childrenElem.label
-              });
-            }
-          })
-        }
-      })
+      if(this.alreadySelected.length !== 0) {
+        this.alreadySelected.forEach(item => this.selectedOptions.push(item));
+      }
+    },
+
+    mounted() {
+      this.$nextTick().then(() => {
+        this.changeIteration++;
+      });
+      if(!this.textBox) {
+        this.$emit('querySettingsEmit', this.querySettings);
+      }
     },
 
     methods: {
@@ -167,11 +172,11 @@
        },
       addService(service) {
         this.$refs.tetxtInput.focus();
-        this.selectedServices.push(service);
+        this.selectedOptions.push(service);
       },
       removeSelected(index) {
         this.$refs.tetxtInput.focus();
-        this.selectedServices.splice(index, 1);
+        this.selectedOptions.splice(index, 1);
       }
     }
   }
