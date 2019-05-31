@@ -11,7 +11,7 @@
       @querySettingsEmit="setLoadSettings">
     </component>
     <!-- <component 
-      :is="'select-multiple'"
+      :is="'select-checkbox'"
       :async="true"
       :symbols-limit="3"
       :placeholder="'Выберите врача'"
@@ -64,10 +64,7 @@
         type: Boolean,
         required: true
       },
-      loadingOptions: {
-        type: Function,
-        required: false
-      },
+
       textBox: {
         type: Boolean,
         required: false,
@@ -136,16 +133,16 @@
         // ]
 
 
-        test: [
-          // {
-          //   "id": 1919369,
-          //   "label": "УЗИ органов грудной клетки",
-          // },
-          // {
-          //   "id": 1828735,
-          //   "label": "УЗИ суставов",
-          // }
-        ]
+        // test: [
+        //   // {
+        //   //   "id": 1919369,
+        //   //   "label": "УЗИ органов грудной клетки",
+        //   // },
+        //   // {
+        //   //   "id": 1828735,
+        //   //   "label": "УЗИ суставов",
+        //   // }
+        // ]
       }
     },
 

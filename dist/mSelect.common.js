@@ -3164,12 +3164,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=4d78ecc8&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=52f294bd&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"m-select"}},[_c(_vm.selectType,{tag:"component",attrs:{"symbols-limit":_vm.symbolsLimit,"placeholder":_vm.placeholder,"second-placeholder":_vm.secondPlaceholder,"text-box":_vm.textBox,"already-selected":_vm.value},on:{"input":_vm.inputTrigger,"querySettingsEmit":_vm.setLoadSettings}})],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=4d78ecc8&
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=52f294bd&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
 var es6_number_constructor = __webpack_require__("c5f6");
@@ -4771,14 +4771,15 @@ var component = componentNormalizer_normalizeComponent(
 )
 
 /* harmony default export */ var select_multiple = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=140f2b7a&
-var select_checkboxvue_type_template_id_140f2b7a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus && _vm.searchStatus},on:{"click":_vm.handleFocus}},[_c('transition-group',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedParents.length !== 0),expression:"selectedParents.length !== 0"}],staticClass:"slected-services",attrs:{"name":"fade-zoom","tag":"ul"}},_vm._l((_vm.selectedParents),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "+_vm._s(service.checkedStatus)),_c('i',{on:{"click":function($event){return _vm.removeService(service, index)}}})])}),0),_c('div',{staticClass:"text-input"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.searchString.length >= 3 && _vm.searchStatus == false),expression:"searchString.length >= 3 && searchStatus == false"}],staticClass:"progress"})]),_c('ul',{staticClass:"services-list services-list_checboxes"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredServices.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredServices),function(service){return _c('li',{key:service.id,class:{'is-checked': service.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label))])],1),_c('ul',_vm._l((service.children),function(childService){return _c('li',{key:childService.id,class:{'is-checked': childService.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(childService)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(childService.label))])],1)])}),0)])})],2)],1)}
-var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7aada482-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=1358603c&
+var select_checkboxvue_type_template_id_1358603c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.handleFocusOut),expression:"handleFocusOut"}],staticClass:"multi-select__container",class:{'is-active': _vm.contFocus && _vm.searchStatus},on:{"click":_vm.handleFocus}},[_c('transition-group',{directives:[{name:"show",rawName:"v-show",value:(_vm.selectedParents.length !== 0),expression:"selectedParents.length !== 0"}],staticClass:"slected-services",attrs:{"name":"fade-zoom","tag":"ul"}},_vm._l((_vm.selectedParents),function(service,index){return _c('li',{key:service.id},[_vm._v(_vm._s(service.label)+" "+_vm._s(service.checkedStatus)),_c('i',{on:{"click":function($event){return _vm.removeOption(service, index)}}})])}),0),_c('div',{staticClass:"text-input"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.searchString),expression:"searchString"}],attrs:{"type":"text","placeholder":_vm.textSearchStatus},domProps:{"value":(_vm.searchString)},on:{"focus":function($event){_vm.textFieldFocus = true},"blur":function($event){_vm.textFieldFocus = false},"input":function($event){if($event.target.composing){ return; }_vm.searchString=$event.target.value}}}),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.searchString.length >= 3 && _vm.searchStatus == false),expression:"searchString.length >= 3 && searchStatus == false"}],staticClass:"progress"})]),_c('ul',{staticClass:"services-list services-list_checboxes"},[(_vm.searchStatus && _vm.searchString.length > 2 && _vm.filtredOptions.length == 0)?_c('li',{staticClass:"not-found"},[_vm._v("Совпадений не найдено")]):_vm._e(),_vm._l((_vm.filtredOptions),function(service){return _c('li',{key:service.id,class:{'is-checked': service.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(service)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(service.label))])],1),_c('ul',_vm._l((service.children),function(childService){return _c('li',{key:childService.id,class:{'is-checked': childService.checked}},[_c('div',{on:{"click":function($event){$event.stopPropagation();return _vm.addParent(childService)}}},[_c('text-highlight',{attrs:{"queries":_vm.searchString}},[_vm._v(_vm._s(childService.label))])],1)])}),0)])})],2)],1)}
+var select_checkboxvue_type_template_id_1358603c_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=140f2b7a&
+// CONCATENATED MODULE: ./src/components/multiselect-types/select-checkbox.vue?vue&type=template&id=1358603c&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/multiselect-types/select-checkbox.vue?vue&type=script&lang=js&
+
 
 //
 //
@@ -4849,25 +4850,31 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
         return [];
       }
     },
-    branchesIds: {
-      // type: Array,
+    symbolsLimit: {
+      type: Number,
       required: false,
-      default: function _default() {
-        return 15212;
-      }
+      default: 3
     },
-    clinicId: {
-      required: false,
-      default: function _default() {
-        return 15212;
-      }
-    },
-    apiUrl: {
+    placeholder: {
       type: String,
+      required: true
+    },
+    secondPlaceholder: {
+      type: String,
+      required: true
+    },
+    async: {
+      type: Boolean,
+      required: true
+    },
+    loadingOptions: {
+      type: Function,
+      required: false
+    },
+    textBox: {
+      type: Boolean,
       required: false,
-      default: function _default() {
-        return 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/';
-      }
+      default: true
     }
   },
   created: function created() {
@@ -4907,8 +4914,58 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
     });
   },
   computed: {
+    querySettings: function querySettings() {
+      var _this3 = this;
+
+      return {
+        async: this.async,
+        searchString: this.searchString,
+        callback: function callback(options) {
+          _this3.queryIteration++;
+          options.forEach(function (elem) {
+            elem.id = elem.id;
+            elem.checked = false;
+            elem.parent = true;
+            elem.checkedSum = 0;
+
+            if ('children' in elem) {
+              elem.children.forEach(function (childElem) {
+                childElem.id = childElem.id;
+                childElem.parent = false;
+                childElem.checked = false;
+              });
+            }
+
+            if (_this3.queryCache.length !== 0 && !_this3.queryCache.some(function (item) {
+              return item.id == elem.id;
+            })) {
+              _this3.queryCache.push(elem);
+            } else if (_this3.queryCache.length == 0) {
+              _this3.queryCache.push(elem);
+            } // обновляем данные в уже выбранных
+
+
+            if ('children' in elem && _this3.queryIteration == 1) {
+              _this3.alreadySelected.forEach(function (queryCacheItem) {
+                if (queryCacheItem.id == elem.id) {
+                  elem.children.forEach(function (childElem) {
+                    if (!_this3.selectedIds.some(function (idItem) {
+                      return idItem == childElem.id;
+                    })) {
+                      childElem.checked = false;
+                      queryCacheItem.children.push(childElem);
+                    }
+                  });
+                }
+              });
+            }
+          });
+          _this3.searchStatus = true;
+        }
+      };
+    },
     textSearchStatus: function textSearchStatus() {
-      return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выберите услуги';
+      return this.textFieldFocus ? this.secondPlaceholder : this.placeholder;
     },
     selectedIds: function selectedIds() {
       var idsArr = [];
@@ -4934,13 +4991,13 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
       });
       return idsArr;
     },
-    filtredServices: function filtredServices() {
-      var _this3 = this;
+    filtredOptions: function filtredOptions() {
+      var _this4 = this;
 
       var mapedArr = [];
       var filtredArr = [];
       mapedArr = this.queryCache.map(function (item, index) {
-        if (_this3.qstatus) {
+        if (_this4.qstatus) {
           if ('children' in item) {
             for (var i = item.children.length - 1; i >= 0; i--) {
               item.children[i].parentId = item.id;
@@ -4955,7 +5012,7 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
             });
           }
 
-          if (_this3.selectedIds.some(function (elem) {
+          if (_this4.selectedIds.some(function (elem) {
             return elem == item.id;
           })) {
             item.checked = true;
@@ -4973,7 +5030,7 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
               //   }
               // }
               ////////////////////////////////////////////////////
-              if (_this3.selectedIds.some(function (elem) {
+              if (_this4.selectedIds.some(function (elem) {
                 return elem == childItem.id;
               })) {
                 childItem.checked = true;
@@ -4992,7 +5049,7 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
           }).length + item.checkedSelf;
           item.checkedStatus = '(' + item.checkedSum + ' из ' + item.checkedAll + ')';
 
-          _this3.$forceUpdate();
+          _this4.$forceUpdate();
         } else {
           item.checkedStatus = '(1 из 1)';
         }
@@ -5003,8 +5060,8 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
       if (mapedArr.length !== 0 && this.searchString.length >= 3) {
         filtredArr = mapedArr.filter(function (item) {
           return 'children' in item ? item.children.some(function (childItem) {
-            return childItem.label.toLowerCase().indexOf(_this3.searchString.toLowerCase()) !== -1;
-          }) || item.label.toLowerCase().indexOf(_this3.searchString.toLowerCase()) !== -1 : item.label.toLowerCase().indexOf(_this3.searchString.toLowerCase()) !== -1;
+            return childItem.label.toLowerCase().indexOf(_this4.searchString.toLowerCase()) !== -1;
+          }) || item.label.toLowerCase().indexOf(_this4.searchString.toLowerCase()) !== -1 : item.label.toLowerCase().indexOf(_this4.searchString.toLowerCase()) !== -1;
         });
       }
 
@@ -5020,7 +5077,7 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
       this.contFocus = false;
     },
     addParent: function addParent(service) {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.searchStatus) {
         // добавлеие через ребенка
@@ -5028,11 +5085,11 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
           if (!this.selectedParentsIds.some(function (item) {
             return item == service.parentId;
           })) {
-            this.filtredServices.forEach(function (filtredItem) {
+            this.filtredOptions.forEach(function (filtredItem) {
               if (filtredItem.id == service.parentId) {
                 service.checked = true;
 
-                _this4.selectedParents.push(filtredItem);
+                _this5.selectedParents.push(filtredItem);
               }
             });
           } else {
@@ -5045,7 +5102,7 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
               if (selecteParentItem.id == service.parentId && selecteParentItem.checked == false && selecteParentItem.children.every(function (item) {
                 return item.checked == false;
               })) {
-                _this4.selectedParents.splice(index, 1);
+                _this5.selectedParents.splice(index, 1);
               }
             });
           } // добавление одиночного елемента
@@ -5056,7 +5113,7 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
             else if (service.parent == true && service.checked == true && !('children' in service)) {
                 this.selectedParents.forEach(function (selecteParentItem, index) {
                   if (selecteParentItem.id == service.id) {
-                    _this4.selectedParents.splice(index, 1);
+                    _this5.selectedParents.splice(index, 1);
                   }
                 });
                 service.checked = false;
@@ -5080,13 +5137,13 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
                       if (selecteParentItem.id == service.id && selecteParentItem.checked == false && selecteParentItem.children.every(function (item) {
                         return item.checked == false;
                       })) {
-                        _this4.selectedParents.splice(index, 1);
+                        _this5.selectedParents.splice(index, 1);
                       }
                     });
                   }
       }
     },
-    removeService: function removeService(service, index) {
+    removeOption: function removeOption(service, index) {
       this.selectedParents.splice(index, 1);
 
       if (this.alreadySelected.length !== 0) {
@@ -5116,66 +5173,13 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
       deep: true
     },
     searchString: function searchString(val) {
-      var _this5 = this;
-
-      if (val.length < 3) {
+      if (val.length < this.symbolsLimit) {
         this.searchStatus = false;
       }
 
-      if (val.length == 3) {
+      if (val.length == this.symbolsLimit) {
         this.qstatus = true;
-        axios_default()({
-          method: 'get',
-          url: this.apiUrl,
-          params: {
-            clinicId: this.clinicId,
-            branchesIds: this.branchesIds,
-            term: val
-          }
-        }).then(function (response) {
-          _this5.queryIteration++;
-          response.data.results.forEach(function (elem) {
-            elem.id = elem.id;
-            elem.checked = false;
-            elem.parent = true;
-            elem.checkedSum = 0;
-
-            if ('children' in elem) {
-              elem.children.forEach(function (childElem) {
-                childElem.id = childElem.id;
-                childElem.parent = false;
-                childElem.checked = false;
-              });
-            }
-
-            if (_this5.queryCache.length !== 0 && !_this5.queryCache.some(function (item) {
-              return item.id == elem.id;
-            })) {
-              _this5.queryCache.push(elem);
-            } else if (_this5.queryCache.length == 0) {
-              _this5.queryCache.push(elem);
-            } // обновляем данные в уже выбранных
-
-
-            if ('children' in elem && _this5.queryIteration == 1) {
-              _this5.alreadySelected.forEach(function (queryCacheItem) {
-                if (queryCacheItem.id == elem.id) {
-                  elem.children.forEach(function (childElem) {
-                    if (!_this5.selectedIds.some(function (idItem) {
-                      return idItem == childElem.id;
-                    })) {
-                      childElem.checked = false;
-                      queryCacheItem.children.push(childElem);
-                    }
-                  });
-                }
-              });
-            }
-          });
-          _this5.searchStatus = true;
-        }).catch(function (error) {
-          console.log(error);
-        });
+        this.$emit('querySettingsEmit', this.querySettings);
       }
     }
   }
@@ -5192,8 +5196,8 @@ var select_checkboxvue_type_template_id_140f2b7a_staticRenderFns = []
 
 var select_checkbox_component = componentNormalizer_normalizeComponent(
   multiselect_types_select_checkboxvue_type_script_lang_js_,
-  select_checkboxvue_type_template_id_140f2b7a_render,
-  select_checkboxvue_type_template_id_140f2b7a_staticRenderFns,
+  select_checkboxvue_type_template_id_1358603c_render,
+  select_checkboxvue_type_template_id_1358603c_staticRenderFns,
   false,
   null,
   null,
@@ -5497,10 +5501,6 @@ var select_single_component = componentNormalizer_normalizeComponent(
       type: Boolean,
       required: true
     },
-    loadingOptions: {
-      type: Function,
-      required: false
-    },
     textBox: {
       type: Boolean,
       required: false,
@@ -5546,8 +5546,7 @@ var select_single_component = componentNormalizer_normalizeComponent(
   },
   data: function data() {
     return {
-      loadSettings: {},
-      // test: [
+      loadSettings: {} // test: [
       //   {
       //     "id": '1919369',
       //     "label": "УЗИ органов грудной клетки",
@@ -5567,15 +5566,17 @@ var select_single_component = componentNormalizer_normalizeComponent(
       //     ]
       //   }
       // ]
-      test: [// {
-        //   "id": 1919369,
-        //   "label": "УЗИ органов грудной клетки",
-        // },
-        // {
-        //   "id": 1828735,
-        //   "label": "УЗИ суставов",
-        // }
-      ]
+      // test: [
+      //   // {
+      //   //   "id": 1919369,
+      //   //   "label": "УЗИ органов грудной клетки",
+      //   // },
+      //   // {
+      //   //   "id": 1828735,
+      //   //   "label": "УЗИ суставов",
+      //   // }
+      // ]
+
     };
   },
   methods: {
