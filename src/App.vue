@@ -1,6 +1,6 @@
 <template>
   <div id="m-select">
-    <component 
+    <!-- <component 
       :is="selectType" 
       :async="async"
       :symbols-limit="symbolsLimit"
@@ -10,9 +10,9 @@
       :already-selected="value" 
       @input="inputTrigger"
       @querySettingsEmit="setLoadSettings">
-    </component>
-    <!-- <component 
-      :is="'select-checkbox'"
+    </component> -->
+    <component 
+      :is="'select-single'"
       :async="true"
       :symbols-limit="3"
       :placeholder="'Выберите врача'"
@@ -21,7 +21,7 @@
       :already-selected="test"
       @input="inputTrigger"
       @querySettingsEmit="setLoadSettings">
-    </component> -->
+    </component>
   </div>
 </template>
 
@@ -63,12 +63,11 @@
       },
       async: {
         type: Boolean,
-        required: true
+        default: false
       },
 
       textBox: {
         type: Boolean,
-        required: false,
         default: true
       },
       alreadySelected: {
@@ -85,24 +84,25 @@
 
       loadOptions: {
         type: Function,
-        default (querySettings) {
-          if(querySettings.async) {
-            axios({
-              method: 'get',
-              url: 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/',
-              params: {
-                clinicId: 5129,
-                term: querySettings.searchString
-              },
-            }).then(response => {
-              querySettings.callback(response.data.results);
-            }).catch(error => {
-              console.error(error);
-            })
-          } else {
-            querySettings.callback([{id: 1828735, label: "УЗИ суставов"}, {id: 1919369, label: 'УЗИ органов грудной клетки'}])
-          }
-        },
+        required: true,
+        // default (querySettings) {
+        //   if(querySettings.async) {
+        //     axios({
+        //       method: 'get',
+        //       url: 'http://spb.p.test.napopravku.ru/profile/load-smd-tree/',
+        //       params: {
+        //         clinicId: 5129,
+        //         term: querySettings.searchString
+        //       },
+        //     }).then(response => {
+        //       querySettings.callback(response.data.results);
+        //     }).catch(error => {
+        //       console.error(error);
+        //     })
+        //   } else {
+        //     querySettings.callback([{id: 1828735, label: "УЗИ суставов"}, {id: 1919369, label: 'УЗИ органов грудной клетки'}])
+        //   }
+        // },
       }
     },
 
@@ -134,16 +134,16 @@
         // ]
 
 
-        // test: [
-        //   // {
-        //   //   "id": 1919369,
-        //   //   "label": "УЗИ органов грудной клетки",
-        //   // },
-        //   // {
-        //   //   "id": 1828735,
-        //   //   "label": "УЗИ суставов",
-        //   // }
-        // ]
+        test: [
+          // {
+          //   "id": 1919369,
+          //   "label": "УЗИ органов грудной клетки",
+          // },
+          // {
+          //   "id": 1828735,
+          //   "label": "УЗИ суставов",
+          // }
+        ]
       }
     },
 
@@ -174,6 +174,13 @@
 </script>
 
 <style lang="scss">
+  #m-select {
+    min-height: 42px;
+    width: 100%;
+    position: relative;
+    overflow: visible;
+
+  
   .visually-hidden {
     position: absolute !important;
     clip: rect(1px 1px 1px 1px);
@@ -194,6 +201,9 @@
 
 
   .multi-select__container {
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
     border-radius: 4px;
     border: solid 1px #bcbcbc;
     box-sizing: border-box;
@@ -203,10 +213,15 @@
     outline: none;
     padding: 1px;
     box-sizing: border-box;
+    &:hover {
+      border: 2px solid #40b3b7;
+      padding: 0px;
+    }
 
     &.is-active {
       border: 2px solid #40b3b7;
       padding: 0px;
+      z-index: 999;
       .services-list {
         height: auto;
         max-height: 340px;
@@ -266,25 +281,27 @@
 
 
   .services-list {
-    padding-left: 10px;
     list-style-type: none;
     text-align: left;
     margin: 0;
     height: 0;
     overflow: hidden;
+    background: #fff;
     li {
       padding-top: 15px;
       padding-bottom: 15px;
-      padding-left: 5px;
+      padding-left: 15px;
       border-bottom: 1px solid rgba(34, 36, 38, 0.08);
+      cursor: pointer;
+      // span {
+      //   cursor: pointer;
+      // }
       &.not-found {
         padding-top: 15px !important;
         padding-bottom: 15px !important;
       }
       &:hover {
-        @media (max-width: 960px) {
-          background-color: #eceeef;
-        }
+        background-color: #F6F6F6;
       }
     }
 
@@ -293,9 +310,7 @@
       li {
         position: relative;
         &:hover {
-          @media (max-width: 960px) {
-            background-color: transparent;
-          }
+          background-color: transparent;
         }
         span {
           position: relative;
@@ -377,13 +392,13 @@
       display: inline-block;
       background-color: #40b3b7;
       padding: 8px 30px 8px 8px;
-      border: 1px solid #36979a;
       border-radius: 4px;
       margin: 2px;
       color: #fff;
       font-weight: 600;
       font-size: 14px;
       i {
+        cursor: pointer;
         position: absolute;
         width: 24px;
         height: 24px;
@@ -403,15 +418,15 @@
   }
 
     // animations
-  .fade-zoom-enter-active {
-    transition: all .3s ease;
+    .fade-zoom-enter-active {
+      transition: all .3s ease;
+    }
+    .fade-zoom-leave-active {
+      transition: all .3s ease;
+    }
+    .fade-zoom-enter, .fade-zoom-leave-to {
+      transform: scale(0.8);
+      opacity: 0;
+    }
   }
-  .fade-zoom-leave-active {
-    transition: all .3s ease;
-  }
-  .fade-zoom-enter, .fade-zoom-leave-to {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  
 </style>

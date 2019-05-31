@@ -1,6 +1,6 @@
   <template>
     <div class="multi-select__container" 
-        :class="{'is-active': contFocus && searchStatus}"
+        :class="{'is-active': contFocus}"
         v-on-clickaway="handleFocusOut"
         @click="handleFocus"
         >

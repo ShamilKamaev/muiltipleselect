@@ -11,6 +11,7 @@
         v-model="searchString"
         @focus="textFieldFocus = true"
         @blur="textFieldFocus = false">
+        <span v-show="searchString.length >= 3 && searchStatus == false" class="progress"></span>
       <ul class="services-list">
         <li class="not-found" v-if="searchStatus && searchString.length > 2 && filtredOptions.length == 0">Совпадений не найдено</li>
         <li v-for="service in filtredOptions" :key="service.id" @click="addService(service)"><text-highlight :queries="searchString">{{ service.label }}</text-highlight></li>
@@ -47,6 +48,10 @@
     created() {
       if(this.alreadySelected.length !== 0) {
         this.alreadySelected.forEach(item => this.selectedOptions.push(item));
+      }
+
+      if(this.async == false) {
+        this.$emit('querySettingsEmit', this.querySettings);
       }
     },
 
@@ -89,18 +94,6 @@
         default: true
       },
 
-
-
-      // clinicId: {
-      //   required: true
-      // },
-      // branchesIds: {
-      //   required: false,
-      // },
-      apiUrl: {
-        type: String,
-        required: true
-      }, 
       alreadySelected: {
         type: Array,
         default() {
@@ -113,7 +106,9 @@
       handleFocusOut() {
         this.contFocus = false;
         this.searchString = '';
-        this.loadedOptions = [];
+        if(this.async) {
+          this.loadedOptions = [];
+        }
        },
       handleFocus() {
         this.contFocus = true;
@@ -138,7 +133,7 @@
           searchString: this.searchString,
           callback: options => {
             this.loadedOptions = options;
-            this.searchStatus = true;
+            this.searchStatus = false;
           }
         })
       },
@@ -186,7 +181,9 @@
     watch: {
       searchString (val) {
         if (val.length < this.symbolsLimit) {
-          this.loadedOptions = [];
+          if(this.async) {
+            this.loadedOptions = [];
+          }
           this.searchStatus = false;
         }
         if (val.length == this.symbolsLimit) {

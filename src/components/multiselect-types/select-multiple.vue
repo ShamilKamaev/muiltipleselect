@@ -55,15 +55,12 @@
       },
       placeholder: {
         type: String,
-        required: true
       },
       secondPlaceholder: {
         type: String,
-        required: true
       },
       async: {
         type: Boolean,
-        required: true
       },
       loadingOptions: {
         type: Function,
@@ -95,7 +92,7 @@
       },
 
       textSearchStatus() {
-        return this.textFieldFocus ? 'Начните вводить название услуги' : 'Выберите услуги'
+        return this.textFieldFocus ? this.secondPlaceholder : this.placeholder
       },
 
       selectedIds() {
@@ -132,7 +129,9 @@
     watch: {
       searchString (val) {
         if (val.length < this.symbolsLimit) {
-          this.loadedOptions = [];
+          if(this.async) {
+            this.loadedOptions = [];
+          }
           this.searchStatus = false;
         }
         if (val.length == this.symbolsLimit) {
@@ -152,6 +151,10 @@
       if(this.alreadySelected.length !== 0) {
         this.alreadySelected.forEach(item => this.selectedOptions.push(item));
       }
+
+      if(this.async == false) {
+        this.$emit('querySettingsEmit', this.querySettings);
+      }
     },
 
     mounted() {
@@ -166,6 +169,10 @@
     methods: {
       handleFocusOut() {
         this.contFocus = false;
+        this.searchString = '';
+        if(this.async) {
+          this.loadedOptions = [];
+        }
        },
       handleFocus() {
         this.contFocus = true;
