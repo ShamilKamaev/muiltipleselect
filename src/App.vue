@@ -1,6 +1,6 @@
 <template>
   <div id="m-select">
-    <!-- <component 
+    <component 
       :is="selectType" 
       :async="async"
       :symbols-limit="symbolsLimit"
@@ -10,8 +10,8 @@
       :already-selected="value" 
       @input="inputTrigger"
       @querySettingsEmit="setLoadSettings">
-    </component> -->
-    <component 
+    </component>
+    <!-- <component 
       :is="'select-single'"
       :async="true"
       :symbols-limit="3"
@@ -21,7 +21,7 @@
       :already-selected="test"
       @input="inputTrigger"
       @querySettingsEmit="setLoadSettings">
-    </component>
+    </component> -->
   </div>
 </template>
 
